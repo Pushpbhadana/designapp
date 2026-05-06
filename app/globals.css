@@ -1,0 +1,20 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: 'Die Grotesk B';
+  src: url('/fonts/DieGrotesk-Regular.woff2') format('woff2'),
+       url('/fonts/DieGrotesk-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+body {
+  font-family: 'Die Grotesk B', Arial, sans-serif;
+  /* font-weight: 400;
+  font-size: 128px;
+  line-height: 0.74;
+  letter-spacing: -0.02em;
+  color: #3c3a3e; */
+  background-color: black;
+}
