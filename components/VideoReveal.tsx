@@ -43,7 +43,7 @@ const VideoScrollAnimation: React.FC<VideoScrollAnimationProps> = ({
   loop = true,
   autoPlay = true,
   playsInline = true,
-  initialWidth = '10vw',
+  initialWidth = '60vw',
   expandedWidth = '100vw',
   className = '',
   containerClassName = '',
@@ -99,6 +99,9 @@ const VideoScrollAnimation: React.FC<VideoScrollAnimationProps> = ({
             playsInline={playsInline}
             controls={false}
             aria-label={alt}
+            onError={(e) => {
+              console.error('Video failed to load:', e);
+            }}
           />
         </div>
       </div>

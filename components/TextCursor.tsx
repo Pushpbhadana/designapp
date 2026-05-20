@@ -1,6 +1,6 @@
 "use client"
 import React, { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'motion/react';
 
 interface TextCursorProps {
   text?: string;
@@ -35,7 +35,7 @@ const TextCursor: React.FC<TextCursorProps> = ({
   const [mounted, setMounted] = useState(false);
   const lastMoveTimeRef = useRef<number>(Date.now());
   const idCounter = useRef<number>(0);
-  const requestRef = useRef<number>();
+  const requestRef = useRef<number | undefined>(undefined);
   const mousePosRef = useRef({ x: 0, y: 0 });
 
   useEffect(() => {
@@ -142,7 +142,7 @@ const TextCursor: React.FC<TextCursorProps> = ({
   }
 
   return (
-    <div className="fixed inset-0 pointer-events-none z-[9999]">
+    <div className="fixed inset-0 pointer-events-none z-9999">
       <AnimatePresence mode="popLayout">
         {trail.map((item, index) => (
           <motion.div
