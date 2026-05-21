@@ -89,20 +89,20 @@ export default function Home() {
           <MagicRings
             color="#fcfcfc"
             colorTwo="#6babb1"
-            ringCount={100}
+            ringCount={10}
             speed={1}
             attenuation={12.5}
-            lineThickness={2}
-            baseRadius={0.95}
+            lineThickness={1}
+            baseRadius={1}
             radiusStep={0.1}
             scaleRate={0.1}
             opacity={1}
-            blur={3}
-            noiseAmount={0.1}
+            blur={2}
+            noiseAmount={0}
             rotation={0}
             ringGap={1.5}
-            fadeIn={0.5}
-            fadeOut={0.5}
+            fadeIn={1}
+            fadeOut={2}
             followMouse
             mouseInfluence={0.2}
             hoverScale={1.45}

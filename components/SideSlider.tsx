@@ -2,7 +2,11 @@ import React from 'react'
 
 const SideSlider = () => {
   return (
-    <div>SideSlider</div>
+    <>
+      <div className='text-4xl text-white font-bold'>
+        Hello
+      </div>
+    </>
   )
 }
 
