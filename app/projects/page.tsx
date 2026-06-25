@@ -1,231 +1,104 @@
-"use client"
-import BubbleMenu from '@/components/BubbleMenu';
-import TextCursor from '@/components/TextCursor';
+"use client";
 
-const items = [
-  {
-    label: 'home',
-    href: '/',
-    ariaLabel: 'Home',
-    rotation: -8,
-    hoverStyles: { bgColor: '#3b82f6', textColor: '#ffffff' }
-  },
-  {
-    label: 'about',
-    href: '/about',
-    ariaLabel: 'About',
-    rotation: 8,
-    hoverStyles: { bgColor: '#10b981', textColor: '#ffffff' }
-  },
-  {
-    label: 'projects',
-    href: '/projects',
-    ariaLabel: 'Projects',
-    rotation: 8,
-    hoverStyles: { bgColor: '#f59e0b', textColor: '#ffffff' }
-  },
-  {
-    label: 'blog',
-    href: '/blog',
-    ariaLabel: 'Blog',
-    rotation: 8,
-    hoverStyles: { bgColor: '#ef4444', textColor: '#ffffff' }
-  },
-  {
-    label: 'contact',
-    href: '/contact',
-    ariaLabel: 'Contact',
-    rotation: -8,
-    hoverStyles: { bgColor: '#8b5cf6', textColor: '#ffffff' }
-  }
-];
+import { motion } from 'motion/react';
+import Link from 'next/link';
+import PortfolioShell from '@/components/PortfolioShell';
+import { projects, projectsPage } from '@/lib/site-content';
 
-const projects = [
-  {
-    title: 'E-Commerce Platform',
-    description: 'A modern e-commerce experience with seamless checkout and product discovery',
-    tags: ['React', 'Next.js', 'Tailwind'],
-    color: '#3b82f6'
-  },
-  {
-    title: 'Portfolio Website',
-    description: 'Creative portfolio showcasing design and development work',
-    tags: ['TypeScript', 'GSAP', 'Framer Motion'],
-    color: '#10b981'
-  },
-  {
-    title: 'Dashboard Application',
-    description: 'Analytics dashboard with real-time data visualization',
-    tags: ['React', 'D3.js', 'Node.js'],
-    color: '#f59e0b'
-  },
-  {
-    title: 'Mobile App UI',
-    description: 'Cross-platform mobile application with intuitive user experience',
-    tags: ['React Native', 'Expo', 'Firebase'],
-    color: '#ef4444'
-  },
-  {
-    title: 'Brand Identity System',
-    description: 'Complete brand identity including logo, typography, and guidelines',
-    tags: ['Figma', 'Illustrator', 'Design System'],
-    color: '#8b5cf6'
-  },
-  {
-    title: 'SaaS Landing Page',
-    description: 'High-converting landing page for B2B software product',
-    tags: ['Next.js', 'Webflow', 'Copywriting'],
-    color: '#ec4899'
-  }
-];
-
-export default function Projects() {
+/**
+ * ── PROJECTS / WORK PAGE ──────────────────────────────────────────────────
+ * Grid of portfolio items. Edit projects[] in lib/site-content.ts.
+ * ───────────────────────────────────────────────────────────────────────────
+ */
+export default function ProjectsPage() {
   return (
-    <>
-      <TextCursor
-        text="😶"
-        spacing={80}
-        followMouseDirection
-        randomFloat
-        exitDuration={0.3}
-        removalInterval={20}
-        maxPoints={10}
-      />
+    <PortfolioShell>
+      <main className="min-h-screen bg-[#0a0a0a] pt-24 px-4 sm:px-8 md:px-16 text-white">
+        <div className="mx-auto max-w-6xl">
+          {/* ── Page header — edit projectsPage in site-content.ts ── */}
+          <motion.header
+            initial={{ opacity: 0, y: 14 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            className="max-w-3xl"
+          >
+            <p className="font-mono text-xs uppercase tracking-[0.2em] text-[#7d8187] sm:text-sm">
+              {projectsPage.eyebrow}
+            </p>
+            <h1 className="mt-4 text-4xl sm:text-6xl font-semibold tracking-tight leading-[1.05]">
+              {projectsPage.headline}
+            </h1>
+            <p className="mt-6 text-base sm:text-lg leading-relaxed text-[#dadbdf]">
+              {projectsPage.body}
+            </p>
+          </motion.header>
 
-      <BubbleMenu
-        className='sticky top-0'
-        logo={<span style={{ fontWeight: 700 }}>RB</span>}
-        items={items}
-        menuAriaLabel="Toggle navigation"
-        menuBg="#ffffff"
-        menuContentColor="#111111"
-        useFixedPosition={true}
-        animationEase="back.out(1.5)"
-        animationDuration={0.5}
-        staggerDelay={0.12}
-      />
-
-      <div className='min-h-screen pt-24 px-4 sm:px-8 md:px-16'>
-        <h1 className='
-          text-5xl sm:text-7xl md:text-9xl 
-          text-gray-300 
-          font-bold 
-          tracking-tighter 
-          mb-16
-        '>
-          Selected Work
-        </h1>
-
-        <div className='grid grid-cols-1 md:grid-cols-2 gap-8'>
-          {projects.map((project, index) => (
-            <div
-              key={index}
-              className='
-                group
-                relative
-                bg-gray-900
-                rounded-2xl
-                p-8
-                overflow-hidden
-                transition-all
-                duration-300
-                hover:scale-105
-                hover:shadow-2xl
-                cursor-pointer
-                border
-                border-gray-800
-                hover:border-gray-700
-              '
-              style={{
-                minHeight: '300px'
-              }}
-            >
-              <div
-                className='absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-300'
-                style={{ backgroundColor: project.color }}
-              />
-              
-              <div className='relative z-10'>
-                <div className='flex flex-wrap gap-2 mb-4'>
-                  {project.tags.map((tag, tagIndex) => (
-                    <span
-                      key={tagIndex}
-                      className='
-                        px-3 py-1
-                        text-sm
-                        rounded-full
-                        bg-gray-800
-                        text-gray-400
-                        group-hover:text-white
-                        transition-colors
-                        duration-300
-                      '
-                      style={{ 
-                        borderColor: project.color,
-                        borderWidth: '1px'
-                      }}
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-                
-                <h2 className='
-                  text-3xl sm:text-4xl 
-                  text-white 
-                  font-bold 
-                  mb-4
-                  group-hover:translate-x-2
-                  transition-transform
-                  duration-300
-                '>
-                  {project.title}
-                </h2>
-                
-                <p className='
-                  text-lg 
-                  text-gray-400 
-                  group-hover:text-gray-300
-                  transition-colors
-                  duration-300
-                '>
-                  {project.description}
-                </p>
-              </div>
-
-              <div
-                className='
-                  absolute
-                  bottom-4
-                  right-4
-                  w-12
-                  h-12
-                  rounded-full
-                  flex
-                  items-center
-                  justify-center
-                  opacity-0
-                  group-hover:opacity-100
-                  transition-all
-                  duration-300
-                  transform
-                  group-hover:scale-100
-                  scale-0
-                '
-                style={{ backgroundColor: project.color }}
+          {/* ── Project grid — add/remove items in site-content.ts → projects ── */}
+          <div className="mt-14 grid gap-6 sm:grid-cols-2 pb-8">
+            {projects.map((project, idx) => (
+              <motion.article
+                key={project.title}
+                initial={{ opacity: 0, y: 18 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ duration: 0.6, delay: idx * 0.05, ease: [0.22, 1, 0.36, 1] }}
+                className="group overflow-hidden rounded-2xl border border-[#212327] bg-[#191919]"
               >
-                <span className='text-white text-xl'>→</span>
-              </div>
-            </div>
-          ))}
-        </div>
+                <div className="aspect-[4/3] overflow-hidden">
+                  <img
+                    src={project.image}
+                    alt={project.title}
+                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    loading="lazy"
+                  />
+                </div>
+                <div className="p-6">
+                  <div className="flex items-baseline justify-between gap-3">
+                    <h2 className="text-xl font-semibold tracking-tight">{project.title}</h2>
+                    <span className="text-sm text-[#7d8187]">{project.year}</span>
+                  </div>
+                  <p className="mt-1 text-sm text-[#7d8187]">{project.category}</p>
+                  <div className="mt-4 flex flex-wrap gap-2">
+                    {project.tags.map((tag) => (
+                      <span
+                        key={tag}
+                        className="rounded-full border border-[#212327] px-3 py-1 text-xs text-[#dadbdf]"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                  {project.href ? (
+                    <Link
+                      href={project.href}
+                      className="mt-5 inline-block text-sm text-white underline-offset-4 hover:underline"
+                    >
+                      View case study →
+                    </Link>
+                  ) : null}
+                </div>
+              </motion.article>
+            ))}
+          </div>
 
-        <div className='mt-16 text-center'>
-          <p className='text-gray-500 text-lg'>
-            More projects coming soon...
-          </p>
+          {/* ── Bottom CTA ── */}
+          <motion.div
+            initial={{ opacity: 0, y: 14 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="mb-8 rounded-2xl border border-[#212327] bg-[#191919] p-8 text-center"
+          >
+            <p className="text-lg text-[#dadbdf]">Ready to start your next project?</p>
+            <Link
+              href="/contact"
+              className="mt-4 inline-block rounded-full border border-white bg-white px-6 py-2.5 text-sm font-medium text-[#0a0a0a] transition-colors hover:bg-[#fafaf7]"
+            >
+              Get in touch
+            </Link>
+          </motion.div>
         </div>
-      </div>
-    </>
+      </main>
+    </PortfolioShell>
   );
 }

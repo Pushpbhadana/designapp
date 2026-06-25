@@ -1,20 +1,25 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Inter, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { siteMeta } from "@/lib/site-content";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
+  weight: ["400"],
+  display: "swap",
 });
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+  weight: ["400"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "Pushpraj Bhadana | Digital Designer & Front-End Developer",
-  description: "Portfolio of Pushpraj Bhadana - Digital Designer & Front-End Developer working at the intersection of visual design, UX, and motion. Crafting expressive websites that feel bold, intuitive, and built to stand out.",
+  title: siteMeta.title,
+  description: siteMeta.description,
 };
 
 export default function RootLayout({
@@ -23,11 +28,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased scroll-smooth`}
-    >
-      <body className="min-h-full flex flex-col">{children}</body>
+    <html lang="en" className={`${inter.variable} ${geistMono.variable}`}>
+      <body>{children}</body>
     </html>
   );
 }

@@ -20,7 +20,12 @@ body {
   line-height: 0.74;
   letter-spacing: -0.02em;
   color: #3c3a3e; */
-  background-color: black;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+body::-webkit-scrollbar {
+  display: none;
 }
 
 @theme inline {

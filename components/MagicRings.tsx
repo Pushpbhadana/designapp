@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
 import * as THREE from 'three';
+import { usePrefersReducedMotion } from '@/components/usePrefersReducedMotion';
 
 const vertexShader = `
 void main() {
@@ -108,26 +109,21 @@ export default function MagicRings({
   parallax = 0.05,
   clickBurst = false,
 }: MagicRingsProps) {
+  const prefersReducedMotion = usePrefersReducedMotion();
   const mountRef = useRef<HTMLDivElement | null>(null);
-  const propsRef = useRef<Required<MagicRingsProps> | null>(null);
   const mouseRef = useRef([0, 0]);
   const smoothMouseRef = useRef([0, 0]);
   const hoverAmountRef = useRef(0);
   const isHoveredRef = useRef(false);
   const burstRef = useRef(0);
 
-  propsRef.current = {
-    color, colorTwo, speed, ringCount, attenuation, lineThickness,
-    baseRadius, radiusStep, scaleRate, opacity, blur, noiseAmount,
-    rotation, ringGap, fadeIn, fadeOut, followMouse, mouseInfluence,
-    hoverScale, parallax, clickBurst,
-  };
-
   useEffect(() => {
+    if (prefersReducedMotion) return;
+
     const mount = mountRef.current;
     if (!mount) return;
 
-    let renderer: THREE.WebGLRenderer;
+    let renderer: any;
     try {
       renderer = new THREE.WebGLRenderer({ alpha: true });
     } catch {
@@ -210,7 +206,6 @@ export default function MagicRings({
     let frameId: number;
     const animate = (t: number) => {
       frameId = requestAnimationFrame(animate);
-      const p = propsRef.current!;
 
       smoothMouseRef.current[0] += (mouseRef.current[0] - smoothMouseRef.current[0]) * 0.08;
       smoothMouseRef.current[1] += (mouseRef.current[1] - smoothMouseRef.current[1]) * 0.08;
@@ -218,27 +213,27 @@ export default function MagicRings({
       burstRef.current *= 0.95;
       if (burstRef.current < 0.001) burstRef.current = 0;
 
-      uniforms.uTime.value = t * 0.001 * p.speed;
-      uniforms.uAttenuation.value = p.attenuation;
-      uniforms.uColor.value.set(p.color);
-      uniforms.uColorTwo.value.set(p.colorTwo);
-      uniforms.uLineThickness.value = p.lineThickness;
-      uniforms.uBaseRadius.value = p.baseRadius;
-      uniforms.uRadiusStep.value = p.radiusStep;
-      uniforms.uScaleRate.value = p.scaleRate;
-      uniforms.uRingCount.value = p.ringCount;
-      uniforms.uOpacity.value = p.opacity;
-      uniforms.uNoiseAmount.value = p.noiseAmount;
-      uniforms.uRotation.value = (p.rotation * Math.PI) / 180;
-      uniforms.uRingGap.value = p.ringGap;
-      uniforms.uFadeIn.value = p.fadeIn;
-      uniforms.uFadeOut.value = p.fadeOut;
+      uniforms.uTime.value = t * 0.001 * speed;
+      uniforms.uAttenuation.value = attenuation;
+      uniforms.uColor.value.set(color);
+      uniforms.uColorTwo.value.set(colorTwo);
+      uniforms.uLineThickness.value = lineThickness;
+      uniforms.uBaseRadius.value = baseRadius;
+      uniforms.uRadiusStep.value = radiusStep;
+      uniforms.uScaleRate.value = scaleRate;
+      uniforms.uRingCount.value = ringCount;
+      uniforms.uOpacity.value = opacity;
+      uniforms.uNoiseAmount.value = noiseAmount;
+      uniforms.uRotation.value = (rotation * Math.PI) / 180;
+      uniforms.uRingGap.value = ringGap;
+      uniforms.uFadeIn.value = fadeIn;
+      uniforms.uFadeOut.value = fadeOut;
       uniforms.uMouse.value.set(smoothMouseRef.current[0], smoothMouseRef.current[1]);
-      uniforms.uMouseInfluence.value = p.followMouse ? p.mouseInfluence : 0;
+      uniforms.uMouseInfluence.value = followMouse ? mouseInfluence : 0;
       uniforms.uHoverAmount.value = hoverAmountRef.current;
-      uniforms.uHoverScale.value = p.hoverScale;
-      uniforms.uParallax.value = p.parallax;
-      uniforms.uBurst.value = p.clickBurst ? burstRef.current : 0;
+      uniforms.uHoverScale.value = hoverScale;
+      uniforms.uParallax.value = parallax;
+      uniforms.uBurst.value = clickBurst ? burstRef.current : 0;
 
       renderer.render(scene, camera);
     };
@@ -256,7 +251,30 @@ export default function MagicRings({
       renderer.dispose();
       material.dispose();
     };
-  }, []);
+  }, [
+    prefersReducedMotion,
+    color,
+    colorTwo,
+    speed,
+    ringCount,
+    attenuation,
+    lineThickness,
+    baseRadius,
+    radiusStep,
+    scaleRate,
+    opacity,
+    blur,
+    noiseAmount,
+    rotation,
+    ringGap,
+    fadeIn,
+    fadeOut,
+    followMouse,
+    mouseInfluence,
+    hoverScale,
+    parallax,
+    clickBurst
+  ]);
 
   return <div ref={mountRef} className="w-full h-full" style={blur > 0 ? { filter: `blur(${blur}px)` } : undefined} />;
 }

@@ -1,5 +1,6 @@
 import { motion, Transition, Easing } from 'motion/react';
 import { useEffect, useRef, useState, useMemo } from 'react';
+import { usePrefersReducedMotion } from '@/components/usePrefersReducedMotion';
 
 type BlurTextProps = {
   text?: string;
@@ -43,6 +44,7 @@ const BlurText: React.FC<BlurTextProps> = ({
   onAnimationComplete,
   stepDuration = 0.35
 }) => {
+  const prefersReducedMotion = usePrefersReducedMotion();
   const elements = animateBy === 'words' ? text.split(' ') : text.split('');
   const [inView, setInView] = useState(false);
   const ref = useRef<HTMLParagraphElement>(null);
@@ -82,6 +84,7 @@ const BlurText: React.FC<BlurTextProps> = ({
 
   const fromSnapshot = animationFrom ?? defaultFrom;
   const toSnapshots = animationTo ?? defaultTo;
+  const finalSnapshot = toSnapshots[toSnapshots.length - 1] as Record<string, string | number>;
 
   const stepCount = toSnapshots.length + 1;
   const totalDuration = stepDuration * (stepCount - 1);
@@ -92,18 +95,20 @@ const BlurText: React.FC<BlurTextProps> = ({
       {elements.map((segment, index) => {
         const animateKeyframes = buildKeyframes(fromSnapshot, toSnapshots);
 
-        const spanTransition: Transition = {
-          duration: totalDuration,
-          times,
-          delay: (index * delay) / 1000,
-          ease: easing
-        };
+        const spanTransition: Transition = prefersReducedMotion
+          ? { duration: 0 }
+          : {
+              duration: totalDuration,
+              times,
+              delay: (index * delay) / 1000,
+              ease: easing
+            };
 
         return (
           <motion.span
             key={index}
-            initial={fromSnapshot}
-            animate={inView ? animateKeyframes : fromSnapshot}
+            initial={prefersReducedMotion ? finalSnapshot : fromSnapshot}
+            animate={prefersReducedMotion ? finalSnapshot : inView ? animateKeyframes : fromSnapshot}
             transition={spanTransition}
             onAnimationComplete={index === elements.length - 1 ? onAnimationComplete : undefined}
             style={{

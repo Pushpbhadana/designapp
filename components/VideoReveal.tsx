@@ -2,6 +2,13 @@ import React, { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
+/**
+ * ── VIDEO SCROLL REVEAL ───────────────────────────────────────────────────
+ * Video container expands from initialWidth → expandedWidth on scroll.
+ * Props are passed from the home page (see videoSection in site-content.ts).
+ * ───────────────────────────────────────────────────────────────────────────
+ */
+
 // Register ScrollTrigger plugin
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
@@ -49,7 +56,7 @@ const VideoScrollAnimation: React.FC<VideoScrollAnimationProps> = ({
   containerClassName = '',
   sectionClassName = '',
   sectionBackground = '',
-  startTrigger = 'top 80%',
+  startTrigger = 'top 100%',
   endTrigger = 'bottom bottom',
   scrub = true,
 }) => {

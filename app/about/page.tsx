@@ -1,136 +1,154 @@
-"use client"
-import BubbleMenu from '@/components/BubbleMenu';
-import TextCursor from '@/components/TextCursor';
+"use client";
 
-const items = [
-  {
-    label: 'home',
-    href: '/',
-    ariaLabel: 'Home',
-    rotation: -8,
-    hoverStyles: { bgColor: '#3b82f6', textColor: '#ffffff' }
-  },
-  {
-    label: 'about',
-    href: '/about',
-    ariaLabel: 'About',
-    rotation: 8,
-    hoverStyles: { bgColor: '#10b981', textColor: '#ffffff' }
-  },
-  {
-    label: 'projects',
-    href: '/projects',
-    ariaLabel: 'Projects',
-    rotation: 8,
-    hoverStyles: { bgColor: '#f59e0b', textColor: '#ffffff' }
-  },
-  {
-    label: 'blog',
-    href: '/blog',
-    ariaLabel: 'Blog',
-    rotation: 8,
-    hoverStyles: { bgColor: '#ef4444', textColor: '#ffffff' }
-  },
-  {
-    label: 'contact',
-    href: '/contact',
-    ariaLabel: 'Contact',
-    rotation: -8,
-    hoverStyles: { bgColor: '#8b5cf6', textColor: '#ffffff' }
-  }
-];
+import { motion } from 'motion/react';
+import BlurText from '@/components/BlurText';
+import PortfolioShell from '@/components/PortfolioShell';
+import {
+  aboutContent,
+  education,
+  experiences,
+  skills,
+} from '@/lib/site-content';
 
+/**
+ * ── ABOUT PAGE ────────────────────────────────────────────────────────────
+ * Profile, skills, experience timeline, education.
+ * Edit all content in lib/site-content.ts (aboutContent, skills, etc.).
+ * ───────────────────────────────────────────────────────────────────────────
+ */
 export default function About() {
   return (
-    <>
-      <TextCursor
-        text="😶"
-        spacing={80}
-        followMouseDirection
-        randomFloat
-        exitDuration={0.3}
-        removalInterval={20}
-        maxPoints={10}
-      />
+    <PortfolioShell>
+      <main className="min-h-screen bg-[#0a0a0a] pt-24 px-4 sm:px-8 md:px-16 text-white">
+        <div className="mx-auto max-w-6xl">
+          {/* ── Intro — edit aboutContent in site-content.ts ── */}
+          <motion.div
+            initial={{ opacity: 0, y: 14 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.25 }}
+            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            className="space-y-5"
+          >
+            <div className="text-gray-400 text-sm font-medium">{aboutContent.eyebrow}</div>
+            <h1 className="text-4xl sm:text-6xl font-semibold tracking-tight leading-[1.05]">
+              {aboutContent.headline}
+            </h1>
+            <div className="max-w-3xl text-gray-300 text-base sm:text-lg leading-relaxed">
+              <BlurText
+                text={aboutContent.bio}
+                delay={20}
+                animateBy="words"
+                direction="top"
+              />
+            </div>
+          </motion.div>
 
-      <BubbleMenu
-        className='sticky top-0'
-        logo={<span style={{ fontWeight: 700 }}>RB</span>}
-        items={items}
-        menuAriaLabel="Toggle navigation"
-        menuBg="#ffffff"
-        menuContentColor="#111111"
-        useFixedPosition={true}
-        animationEase="back.out(1.5)"
-        animationDuration={0.5}
-        staggerDelay={0.12}
-      />
+          {/* ── Profile + skills grid ── */}
+          <div className="mt-14 grid lg:grid-cols-5 gap-8 items-start">
+            <motion.aside
+              initial={{ opacity: 0, x: -16 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+              className="lg:col-span-2"
+            >
+              <div className="rounded-2xl border border-white/10 bg-white/5 overflow-hidden">
+                <img
+                  src={aboutContent.profileImage}
+                  alt={aboutContent.name}
+                  className="w-full h-auto object-cover max-h-[420px]"
+                  loading="lazy"
+                  onError={(e) => {
+                    e.currentTarget.src = aboutContent.profileFallback;
+                  }}
+                />
+                <div className="p-5">
+                  <div className="text-xl font-semibold">{aboutContent.name}</div>
+                  <div className="text-gray-400 mt-1">{aboutContent.role}</div>
+                </div>
+              </div>
+            </motion.aside>
 
-      <div className='
-        min-h-screen
-        text-2xl sm:text-4xl md:text-7xl 
-        text-gray-300 
-        leading-relaxed sm:leading-17 
-        tracking-tighter 
-        m-4 sm:m-5 
-        flex flex-col 
-        justify-around 
-        gap-6 sm:gap-10
-        pt-24
-      '>
-        <div className="px-2 sm:px-0">
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;I&apos;m a <span className='text-gray-600'>Pushp Bhadana</span> digital designer & Front-End developer working at the intersection of visual design, UX, and motion. I help brands and creative teams craft expressive websites that feel bold, intuitive, and built to stand out.
-        </div>
-
-        <div className='
-          flex justify-start 
-          flex-col 
-          ms-0 sm:ms-20 md:ms-40 
-          text-base sm:text-2xl md:text-3xl 
-          tracking-tight 
-          gap-3
-        '>
-          <img 
-            src="https://cdn.prod.website-files.com/691b49cf9e65846bca53c594/692ad01f1921cfb2fab45e91_about-pf.avif" 
-            alt="avatar"  
-            className='w-32 sm:w-48 md:w-72 lg:w-[300px] h-auto rounded-lg'
-          />
-          <div>
-            Pushpraj Bhadana [ 24 ]
-            <br />
-            Faridabad, India
+            <motion.section
+              initial={{ opacity: 0, y: 14 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+              className="lg:col-span-3"
+            >
+              <div className="rounded-2xl border border-white/10 bg-white/5 p-6">
+                <h2 className="text-2xl font-semibold tracking-tight">Technical Skills</h2>
+                <div className="mt-5 flex flex-wrap gap-2">
+                  {skills.map((tag) => (
+                    <span
+                      key={tag}
+                      className="px-3 py-1 rounded-full text-sm border border-white/10 bg-white/5 text-gray-300"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </motion.section>
           </div>
-        </div>
 
-        <div className='
-          flex justify-end 
-          me-0 sm:me-10 md:me-20 lg:me-40 
-          text-base sm:text-2xl md:text-3xl 
-          tracking-tight
-        '>
-          <video 
-            src="https://vz-709d76e6-c36.b-cdn.net/643b8d32-4e9f-4056-837d-846757a0e9a1/playlist.m3u8" 
-            autoPlay 
-            loop 
-            muted 
-            className='w-full max-w-[300px] sm:max-w-[500px] md:max-w-[700px] lg:w-[900px] rounded-lg'
-          />
-        </div>
+          {/* ── Experience — edit experiences[] in site-content.ts ── */}
+          <section className="mt-16">
+            <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight">Experience</h2>
+            <div className="mt-8 space-y-6">
+              {experiences.map((role, idx) => (
+                <motion.article
+                  key={role.title}
+                  initial={{ opacity: 0, y: 16 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.25 }}
+                  transition={{ duration: 0.6, delay: idx * 0.05, ease: [0.22, 1, 0.36, 1] }}
+                  className="rounded-2xl border border-white/10 bg-white/5 p-6"
+                >
+                  <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-3">
+                    <div>
+                      <div className="text-white text-xl font-semibold">{role.title}</div>
+                      <div className="text-gray-400">{role.org}</div>
+                    </div>
+                    <div className="text-gray-400 text-sm sm:text-base">{role.period}</div>
+                  </div>
+                  <ul className="mt-4 space-y-2 text-gray-300 leading-relaxed">
+                    {role.bullets.map((b) => (
+                      <li key={b} className="flex gap-3">
+                        <span className="mt-2 h-1.5 w-1.5 rounded-full bg-emerald-400 shrink-0" />
+                        <span>{b}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </motion.article>
+              ))}
+            </div>
+          </section>
 
-        <div className='
-          flex justify-start 
-          flex-col 
-          ms-0 sm:ms-20 md:ms-40 
-          text-base sm:text-2xl md:text-3xl 
-          tracking-tight
-        '>
-          <img 
-            src="https://cdn.prod.website-files.com/691b49cf9e65846bca53c594/692ad01f1921cfb2fab45e91_about-pf.avif" 
-            alt="avatar"  
-            className='w-full max-w-[250px] sm:max-w-[400px] md:max-w-[500px] lg:w-[500px] h-auto rounded-lg'
-          />
+          {/* ── Education — edit education[] in site-content.ts ── */}
+          <section className="mt-16 pb-8">
+            <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight">
+              Education & Certifications
+            </h2>
+            <div className="mt-8 grid md:grid-cols-2 gap-6">
+              {education.map((item, idx) => (
+                <motion.div
+                  key={item.title}
+                  initial={{ opacity: 0, y: 16 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.25 }}
+                  transition={{ duration: 0.6, delay: idx * 0.05, ease: [0.22, 1, 0.36, 1] }}
+                  className="rounded-2xl border border-white/10 bg-white/5 p-6"
+                >
+                  <div className="text-white text-xl font-semibold">{item.title}</div>
+                  <div className="mt-1 text-gray-400">{item.org}</div>
+                  <div className="mt-3 text-gray-400 text-sm">{item.period}</div>
+                </motion.div>
+              ))}
+            </div>
+          </section>
         </div>
-      </div>
-    </>
+      </main>
+    </PortfolioShell>
   );
 }
