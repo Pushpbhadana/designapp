@@ -67,8 +67,8 @@ export const introSection = {
 
 /** ── GALLERY (Home) ──────────────────────────────────────────────────────── */
 export const gallerySection = {
-  title: "Our recent work",
-  subtitle: "Selected projects from 2024–2026",
+  title: "Work",
+  subtitle: "Our designs and Art",
 };
 
 /** ── VIDEO REVEAL (Home) ─────────────────────────────────────────────────── */

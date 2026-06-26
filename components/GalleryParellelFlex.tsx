@@ -110,7 +110,7 @@ export default function GalleryParallaxFlip() {
           <div ref={col1Ref} className="will-change-transform flex-1">
             <div className="imgSel">
               <img
-                src="https://assets.codepen.io/181080/01-lrg.jpg"
+                src="/project1.jpg"
                 alt="gallery"
                 className="w-full p-1 rounded-[6%]"
               />
@@ -120,48 +120,62 @@ export default function GalleryParallaxFlip() {
                 ref={thumbnailRef}
                 className="thumbImg w-full p-1 rounded-[6%] cursor-pointer"
                 data-flip-id="img05"
-                src="https://assets.codepen.io/181080/02-lrg.jpg"
+                src="/project2.jpg"
                 alt="thumbnail"
               />
             </div>
             <div className="imgSel">
               <img
-                src="https://assets.codepen.io/181080/03-lrg.jpg"
+                src="/project7.webp"
                 alt="gallery"
                 className="w-full p-1 rounded-[6%]"
               />
             </div>
             <div className="imgSel">
               <img
-                src="https://assets.codepen.io/181080/04-lrg.jpg"
+                src="/project4.jpg"
                 alt="gallery"
                 className="w-full p-1 rounded-[6%]"
               />
             </div>
             <div className="imgSel">
               <img
-                src="https://assets.codepen.io/181080/05-lrg.jpg"
+                src="/project5.jpg"
                 alt="gallery"
                 className="w-full p-1 rounded-[6%]"
               />
             </div>
             <div className="imgSel">
               <img
-                src="https://assets.codepen.io/181080/06-lrg.jpg"
+                src="/project6.jpg"
                 alt="gallery"
                 className="w-full p-1 rounded-[6%]"
               />
             </div>
             <div className="imgSel">
               <img
-                src="https://assets.codepen.io/181080/07-lrg.jpg"
+                src="/project7.webp"
                 alt="gallery"
                 className="w-full p-1 rounded-[6%]"
               />
             </div>
             <div className="imgSel">
               <img
-                src="https://assets.codepen.io/181080/08-lrg.jpg"
+                src="/project13.jpg"
+                alt="gallery"
+                className="w-full p-1 rounded-[6%]"
+              />
+            </div>
+            <div className="imgSel">
+              <img
+                src="/project8.webp"
+                alt="gallery"
+                className="w-full p-1 rounded-[6%]"
+              />
+            </div>
+            <div className="imgSel">
+              <img
+                src="/project3.jpg"
                 alt="gallery"
                 className="w-full p-1 rounded-[6%]"
               />
@@ -172,56 +186,70 @@ export default function GalleryParallaxFlip() {
           <div ref={col2Ref} className="will-change-transform flex-1">
             <div className="imgSel">
               <img
-                src="https://assets.codepen.io/181080/09-lrg.jpg"
+                src="/project5.jpg"
                 alt="gallery"
                 className="w-full p-1 rounded-[6%]"
               />
             </div>
             <div className="imgSel">
               <img
-                src="https://assets.codepen.io/181080/10-lrg.jpg"
+                src="/project6.jpg"
                 alt="gallery"
                 className="w-full p-1 rounded-[6%]"
               />
             </div>
             <div className="imgSel">
               <img
-                src="https://assets.codepen.io/181080/11-lrg.jpg"
+                src="/project1.jpg"
                 alt="gallery"
                 className="w-full p-1 rounded-[6%]"
               />
             </div>
             <div className="imgSel">
               <img
-                src="https://assets.codepen.io/181080/12-lrg.jpg"
+                src="/project1.jpg"
                 alt="gallery"
                 className="w-full p-1 rounded-[6%]"
               />
             </div>
             <div className="imgSel">
               <img
-                src="https://assets.codepen.io/181080/13-lrg.jpg"
+                src="/project2.jpg"
                 alt="gallery"
                 className="w-full p-1 rounded-[6%]"
               />
             </div>
             <div className="imgSel">
               <img
-                src="https://assets.codepen.io/181080/14-lrg.jpg"
+                src="/project1.jpg"
                 alt="gallery"
                 className="w-full p-1 rounded-[6%]"
               />
             </div>
             <div className="imgSel">
               <img
-                src="https://assets.codepen.io/181080/15-lrg.jpg"
+                src="/project9.jpg"
                 alt="gallery"
                 className="w-full p-1 rounded-[6%]"
               />
             </div>
             <div className="imgSel">
               <img
-                src="https://assets.codepen.io/181080/16-lrg.jpg"
+                src="/project10.jpg"
+                alt="gallery"
+                className="w-full p-1 rounded-[6%]"
+              />
+            </div>
+            <div className="imgSel">
+              <img
+                src="/project14.jpg"
+                alt="gallery"
+                className="w-full p-1 rounded-[6%]"
+              />
+            </div>
+            <div className="imgSel">
+              <img
+                src="/project8.webp"
                 alt="gallery"
                 className="w-full p-1 rounded-[6%]"
               />
@@ -232,56 +260,56 @@ export default function GalleryParallaxFlip() {
           <div ref={col3Ref} className="will-change-transform flex-1">
             <div className="imgSel">
               <img
-                src="https://assets.codepen.io/181080/17-lrg.jpg"
+                src="/project4.jpg"
                 alt="gallery"
                 className="w-full p-1 rounded-[6%]"
               />
             </div>
             <div className="imgSel">
               <img
-                src="https://assets.codepen.io/181080/18-lrg.jpg"
+                src="/project6.jpg"
                 alt="gallery"
                 className="w-full p-1 rounded-[6%]"
               />
             </div>
             <div className="imgSel">
               <img
-                src="https://assets.codepen.io/181080/19-lrg.jpg"
+                src="/project3.jpg"
                 alt="gallery"
                 className="w-full p-1 rounded-[6%]"
               />
             </div>
             <div className="imgSel">
               <img
-                src="https://assets.codepen.io/181080/20-lrg.jpg"
+                src="/project13.jpg"
                 alt="gallery"
                 className="w-full p-1 rounded-[6%]"
               />
             </div>
             <div className="imgSel">
               <img
-                src="https://assets.codepen.io/181080/21-lrg.jpg"
+                src="/project11.jpg"
                 alt="gallery"
                 className="w-full p-1 rounded-[6%]"
               />
             </div>
             <div className="imgSel">
               <img
-                src="https://assets.codepen.io/181080/22-lrg.jpg"
+                src="/project12.jpg"
                 alt="gallery"
                 className="w-full p-1 rounded-[6%]"
               />
             </div>
             <div className="imgSel">
               <img
-                src="https://assets.codepen.io/181080/23-lrg.jpg"
+                src="/project3.jpg"
                 alt="gallery"
                 className="w-full p-1 rounded-[6%]"
               />
             </div>
             <div className="imgSel">
               <img
-                src="https://assets.codepen.io/181080/24-lrg.jpg"
+                src="/project5.jpg"
                 alt="gallery"
                 className="w-full p-1 rounded-[6%]"
               />
