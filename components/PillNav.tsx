@@ -66,6 +66,24 @@ const PillNav: React.FC<PillNavProps> = ({
   const connectButtonTweenRef = useRef<gsap.core.Tween | null>(null);
   const resizeTimeoutRef = useRef<NodeJS.Timeout | undefined>(undefined);
 
+  const [isInverted, setIsInverted] = useState(true); // start inverted
+
+  useEffect(() => {
+  // Only run on client
+  if (typeof window === "undefined") return;
+
+  const handleScroll = () => {
+    const scrollThreshold = window.innerHeight * 0.1; // 3% of viewport height
+    const scrolled = window.scrollY;
+    setIsInverted(scrolled < scrollThreshold); // invert if not past threshold
+  };
+
+  // Set initial state
+  handleScroll();
+
+  window.addEventListener("scroll", handleScroll, { passive: true });
+  return () => window.removeEventListener("scroll", handleScroll);
+}, []);
   // Compute logo container size (width & height)
   const getLogoSize = (): { width: string; height: string } => {
     const defaultSize = 'var(--nav-h)';
@@ -102,9 +120,9 @@ const PillNav: React.FC<PillNavProps> = ({
     const pill = circle.parentElement as HTMLElement;
     const rect = pill.getBoundingClientRect();
     const { width: w, height: h } = rect;
-    
+
     if (w === 0 || h === 0) return;
-    
+
     const R = ((w * w) / 4 + h * h) / (2 * h);
     const D = Math.ceil(2 * R) + 2;
     const delta = Math.ceil(R - Math.sqrt(Math.max(0, R * R - (w * w) / 4))) + 1;
@@ -130,7 +148,7 @@ const PillNav: React.FC<PillNavProps> = ({
     if (tlRefs.current[index]) {
       tlRefs.current[index]?.kill();
     }
-    
+
     const tl = gsap.timeline({ paused: true });
 
     tl.to(circle, { scale: 1.2, xPercent: -50, duration: 2, ease, overwrite: 'auto' }, 0);
@@ -171,11 +189,11 @@ const PillNav: React.FC<PillNavProps> = ({
         layout();
       }, 150);
     };
-    
+
     window.addEventListener('resize', onResize);
 
     if (document.fonts) {
-      document.fonts.ready.then(layout).catch(() => {});
+      document.fonts.ready.then(layout).catch(() => { });
     }
 
     const menu = mobileMenuRef.current;
@@ -286,7 +304,7 @@ const PillNav: React.FC<PillNavProps> = ({
   const handleConnectButtonEnter = useCallback(() => {
     const button = connectButtonRef.current;
     if (!button) return;
-    
+
     if (connectButtonTweenRef.current) {
       connectButtonTweenRef.current.kill();
     }
@@ -303,7 +321,7 @@ const PillNav: React.FC<PillNavProps> = ({
   const handleConnectButtonLeave = useCallback(() => {
     const button = connectButtonRef.current;
     if (!button) return;
-    
+
     if (connectButtonTweenRef.current) {
       connectButtonTweenRef.current.kill();
     }
@@ -417,7 +435,15 @@ const PillNav: React.FC<PillNavProps> = ({
                 ref={logoRef}
                 className="inline-flex items-start justify-start overflow-hidden transition-transform hover:scale-105 w-[120px] h-[60px] md:mt-5  md:w-[150px] md:h-[80px]"
               >
-                <img src={"/logonobg.svg"} alt={logoAlt} ref={logoImgRef} className="w-full h-full object-cover block bg-white/20 rounded-full" />
+                <img
+                  src={"/logonobg.svg"}
+                  alt={logoAlt}
+                  ref={logoImgRef}
+                  className="w-full h-full object-cover block"
+                  style={{
+                    filter: isInverted ? "invert(1)" : "invert(0)",
+                  }}
+                />
               </Link>
             ) : (
               <a
@@ -578,7 +604,7 @@ const PillNav: React.FC<PillNavProps> = ({
               </a>
             )}
           </div>
-          
+
           {/* Hamburger Button - Only visible on mobile */}
           <button
             ref={hamburgerRef}

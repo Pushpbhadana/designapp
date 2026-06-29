@@ -145,12 +145,13 @@ export default function HeroWithImageReveal() {
       <div ref={heroRef} className="relative bg-[#fdfff5] min-h-screen overflow-hidden">
 
           <div className="absolute inset-0 top-1 left-0 z-10">
+            
             <img
-              src="/bghero3.png"
+              src="/mm.jpg"
               alt="Flowers"
               className="w-full object-cover h-full"
-            />
-            {/* <div className="absolute inset-0 bg-black/40" /> overlay for readability */}
+            />     
+            
           </div>
 
         <div className="relative z-10 flex flex-col min-h-screen">
@@ -161,55 +162,61 @@ export default function HeroWithImageReveal() {
               <div className="flex flex-wrap items-center gap-2 md:gap-5 mb-4 md:mb-6 mt-10">
                 <h1
                   ref={topLineFirstRef}
-                  className="text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-extrabold transform scale-y-[1.5] tracking-tight text-black"
+                  className="text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-bold transform scale-y-[1.5] tracking-tight text-black"
                 >
                   {heroContent.headlineFirst}
                 </h1>
 
                 <div className="relative w-[110px] h-[70px] sm:w-[160px] sm:h-[90px] md:w-[250px] md:h-[130px] mx-1 md:mx-3 rounded-2xl overflow-hidden shadow-xl border-2 border-white/30 hidden sm:block">
                   <div ref={smallImgInnerRef} className="w-full h-full overflow-hidden">
-                    <img
+                    <video
                       src={heroContent.thumbnailSrc}
-                      alt={heroContent.thumbnailAlt}
-                      className="w-full h-full object-cover scale-105"
+                      className="h-full w-full object-cover"
+                      autoPlay
+                      loop
+                      muted
+                      playsInline
                     />
                   </div>
                 </div>
 
                 <h1
                   ref={topLineSecondRef}
-                  className="text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-extrabold transform scale-y-[1.5] mt-10 tracking-tight text-black leading-none"
+                  className="text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-bold transform scale-y-[1.5] mt-10 tracking-tight text-black leading-none"
                 >
                   {heroContent.headlineSecond}
                 </h1>
               </div>
 
-              {/* Bottom CTA block */}
+              {/* Subheadline + CTAs */}
               <div
                 ref={ctaButtonRef}
-                className="mt-16 md:mt-20 pb-5 flex flex-col md:flex-row justify-between items-center gap-6 pt-5 md:text-left"
+                className="mt-8 md:mt-20 flex flex-col gap-6 md:flex-row md:items-end md:justify-between"
               >
-                <div ref={futureTextRef}>
-                  <h3 className="text-2xl md:text-3xl font-bold text-black">
-                    {heroContent.ctaTitle}
-                  </h3>
-                  <p className="text-gray-500 mt-2">{heroContent.ctaSubtitle}</p>
+                <div ref={futureTextRef} className="max-w-2xl">
+                  <p className="text-lg md:text-xl leading-relaxed text-gray-700">
+                    {heroContent.subheadline}
+                  </p>
+                </div>
+                <div className="flex flex-wrap items-center gap-3 mt-4 md:mt-0">
+                  <Link
+                    href={heroContent.primaryCta.href}
+                    ref={readMoreRef}
+                    className="inline-block rounded-full border border-black/20 bg-black px-5 py-2 text-sm font-medium text-white transition-colors hover:bg-gray-800 md:text-base"
+                  >
+                    {heroContent.primaryCta.label}
+                  </Link>
+                  <Link
+                    href={heroContent.secondaryCta.href}
+                    className="inline-block rounded-full border border-black bg-transparent px-5 py-2 text-sm font-medium text-black transition-colors hover:bg-black/5 md:text-base"
+                  >
+                    {heroContent.secondaryCta.label}
+                  </Link>
                 </div>
               </div>
 
-              {/* Read-more pill — links to heroContent.readMoreHref */}
-              <div className="mt-1">
-                <Link
-                  href={heroContent.readMoreHref}
-                  ref={readMoreRef}
-                  className="inline-block bg-black text-white text-sm md:text-base font-medium px-4 py-1.5 rounded-full tracking-wide hover:bg-gray-800 transition-colors"
-                >
-                  {heroContent.readMoreLabel}
-                </Link>
-              </div>
-
               {/* Stats row — edit heroContent.stats in site-content.ts */}
-              <div className="grid grid-cols-2 md:grid-cols-7 gap-6 md:gap-12 mt-16 md:mt-20 w-screen">
+              <div className="grid grid-cols-2 md:grid-cols-7 gap-6 mt-3 w-screen md:hidden">
                 {heroContent.stats.map((stat) => (
                   <div
                     key={stat.label}
@@ -250,7 +257,7 @@ export default function HeroWithImageReveal() {
               </div>
 
               {/* Partner section */}
-              <div className="grid md:grid-cols-2 gap-5 items-start my-3">
+              <div className="grid md:grid-cols-2 gap-5 items-start my-3 md:mt-20">
                 <div>
                   <h2
                     ref={partnerTitleRef}

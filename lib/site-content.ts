@@ -9,18 +9,19 @@
 /** ── BRAND & SEO ───────────────────────────────────────────────────────── */
 export const siteMeta = {
   name: "blüm desing",
-  title: "blüm desing | Digital Designer & website Develope Studio",
+  title: "blüm desing | Boutique Web Design & Brand Studio",
   description:
-    "Portfolio of blüm desing — Digital Designer & website Develope Studio working at the intersection of visual design, UX, and motion.",
-  tagline: "Design interfaces with engineered restraint.",
+    "Blüm Desing is a boutique web design studio creating digital experiences inspired by nature's elegance — websites, brands, and e-commerce that feel alive.",
+  tagline: "We design digital experiences that bloom.",
 };
 
 /** ── NAVIGATION ────────────────────────────────────────────────────────── */
 export const navItems = [
   { label: "Home", href: "/" },
-  { label: "Work", href: "/projects" },
-  { label: "Tech", href: "/tech" },
-  { label: "About", href: "/about" },
+  { label: "About", href: "/#about-home" },
+  { label: "Services", href: "/#services" },
+  { label: "Work", href: "/#work" },
+  { label: "Pricing", href: "/#pricing" },
 ] as const;
 
 export const navCta = {
@@ -30,16 +31,16 @@ export const navCta = {
 
 /** ── HERO (Home) ─────────────────────────────────────────────────────────── */
 export const heroContent = {
-  headlineFirst: "UNLOCK YOUR",
-  headlineSecond: "BUSINESS POTENTIAL",
-  mainText: "UNLOCK YOUR BUSINESS POTENTIAL",
-  thumbnailSrc: "/flowers.png",
-  thumbnailAlt: "Project preview",
+  headlineFirst: "We Design digital",
+  headlineSecond: "experiences that bloom.",
+  subheadline:
+    "Blending beauty, intuition, and strategy — we create websites and brands that feel alive.",
+  thumbnailSrc: "/site.mp4",
   videoSrc: "/site.mp4",
   scrollHint: "Scroll down to explore ↓",
-  ctaTitle: "Together, We Build a Stronger Digital Presence.",
-  ctaSubtitle: "Let's transform your vision into reality — get a quote today.",
-  readMoreLabel: "Click here →",
+  primaryCta: { label: "View Our Work", href: "/#work" },
+  secondaryCta: { label: "Start Your Project", href: "/contact" },
+  readMoreLabel: "Start Your Project →",
   readMoreHref: "/contact",
   stats: [
     { value: "12", suffix: "+", label: "Projects" },
@@ -49,31 +50,320 @@ export const heroContent = {
   partnerTitle: "Your Partner in Business Growth",
   partnerCopy:
     "We don't just create websites — we craft digital experiences that grow your business and leave a lasting impression.",
-  highlightValue: "S",
+  highlightValue: "50",
   highlightSuffix: "+",
   highlightLabel: "Brands Transformed",
   highlightCopy: "Helping businesses reach new heights through design.",
 };
 
+/** ── ABOUT (Home strip) ────────────────────────────────────────────────── */
+export const aboutSection = {
+  eyebrow: "About Us",
+  headline: "Digital experiences inspired by nature's elegance.",
+  body:
+    "Blüm Desing is a boutique web design studio that creates digital experiences inspired by nature's elegance. We draw from organic rhythms and harmonious contrasts to build intuitive interfaces.",
+  body2: "We believe beautiful design isn't just decoration — it's strategy that connects brands with audiences. By blending grace with structure, we ensure every element serves a clear goal.",
+  primaryCta: { label: "Learn More", href: "/about" },
+};
+
 /** ── INTRO STRIP (Home) ────────────────────────────────────────────────── */
 export const introSection = {
-  eyebrow: "Front-End Engineering",
-  headline: "Design interfaces with engineered restraint.",
+  eyebrow: "Our Approach",
+  headline: "Beautiful design isn't decoration — it's strategy.",
   body:
-    "I build high-performance web products with clean interaction systems, accessible defaults, and motion that supports the content instead of competing with it.",
-  primaryCta: { label: "View Selected Work", href: "/projects" },
+    "We build high-performance websites and brands with clean interaction systems, accessible defaults, and motion that supports the content instead of competing with it.",
+  primaryCta: { label: "View Selected Work", href: "/#work" },
   secondaryCta: { label: "Start a Project", href: "/contact" },
 };
 
 /** ── GALLERY (Home) ──────────────────────────────────────────────────────── */
 export const gallerySection = {
-  title: "Work",
-  subtitle: "Our designs and Art",
+  title: "Selected Works",
+  subtitle: "Portfolio highlights from recent projects",
 };
+
+/** ── SELECTED WORKS (Featured portfolio) ───────────────────────────────── */
+export type SelectedWork = {
+  title: string;
+  caption: string;
+  image: string;
+  tags?: string[];
+};
+
+export const selectedWorks: SelectedWork[] = [
+  {
+    title: "Kohaku Water",
+    caption: "Organic lifestyle e-commerce",
+    image: "/project1.jpg",
+    tags: ["E-commerce", "Lifestyle"],
+  },
+  {
+    title: "True Life",
+    caption: "Digital art platform & NFT gallery",
+    image: "/project2.jpg",
+    tags: ["Digital Art", "Web App"],
+  },
+  {
+    title: "Nebula",
+    caption: "Next-gen music experience",
+    image: "/project3.jpg",
+    tags: ["Mobile UI", "Music"],
+  },
+  {
+    title: "GreenMotive",
+    caption: "Eco-brand identity & website",
+    image: "/project4.jpg",
+    tags: ["Branding", "Sustainability"],
+  },
+  {
+    title: "Desert Bloom",
+    caption: "Artistic login & onboarding flow",
+    image: "/project5.jpg",
+    tags: ["UI/UX", "Creative"],
+  },
+];
+
+/** ── SERVICES (Home cards) ───────────────────────────────────────────────── */
+export const serviceCards = [
+  {
+    title: "Digital Design",
+    copy: "Websites, apps, and interfaces that don't just look good — they feel right.",
+  },
+  {
+    title: "Brand Identity",
+    copy: "From logo to full visual language, we help your brand stand out naturally.",
+  },
+  {
+    title: "E-commerce",
+    copy: "Beautiful online stores that convert visitors into loyal customers.",
+  },
+  {
+    title: "Art & Culture",
+    copy: "Specializing in creative, artistic, and lifestyle projects.",
+  },
+];
+
+/** ── SERVICE CATEGORIES (Detailed) ───────────────────────────────────────── */
+export const serviceCategories = [
+  {
+    title: "Website Design & Development",
+    items: [
+      "Custom Website Design (UI/UX focused, responsive, fast-loading)",
+      "Landing Page Design (high-conversion)",
+      "E-commerce Websites (Shopify, custom, WooCommerce)",
+      "Web App / SaaS Interfaces",
+      "Redesign & Revamp (existing sites)",
+    ],
+  },
+  {
+    title: "Branding & Identity",
+    items: [
+      "Brand Strategy & Visual Identity",
+      "Logo Design",
+      "Brand Guidelines",
+      "Typography & Color Systems",
+    ],
+  },
+  {
+    title: "Digital Products",
+    items: [
+      "Mobile App UI/UX Design (iOS & Android)",
+      "Dashboard & Admin Panel Design",
+      "Figma Prototypes & Animations",
+    ],
+  },
+  {
+    title: "Growth Services",
+    items: [
+      "SEO Optimization (Technical + On-page)",
+      "Speed & Performance Optimization",
+      "Basic Digital Marketing Setup (Google Analytics, Meta Pixel, etc.)",
+      "Ongoing Maintenance & Support Plans",
+    ],
+  },
+  {
+    title: "Specialty",
+    items: [
+      "Artistic / Aesthetic Websites",
+      "NFT / Digital Art Platforms",
+      "Wellness, Beauty, Lifestyle & Creative brands",
+    ],
+  },
+];
+
+/** ── WHY CHOOSE ──────────────────────────────────────────────────────────── */
+export const whyChooseSection = {
+  eyebrow: "Why Choose Blüm Desing?",
+  items: [
+    "Obsessed with beautiful, intentional design",
+    "Fast delivery without sacrificing quality",
+    "100% custom — no templates",
+    "Strong focus on user experience & conversion",
+    "We speak both aesthetics and business",
+  ],
+};
+
+/** ── PROCESS ─────────────────────────────────────────────────────────────── */
+export const processSection = {
+  eyebrow: "Our Process",
+  headline: "From discovery to growth — a clear path to launch.",
+  steps: [
+    { number: "01", title: "Discovery & Strategy", copy: "We learn your goals, audience, and vision." },
+    { number: "02", title: "Moodboarding & Design", copy: "Visual direction, wireframes, and high-fidelity UI." },
+    { number: "03", title: "Development & Animation", copy: "Pixel-perfect build with motion and performance." },
+    { number: "04", title: "Testing & Launch", copy: "QA, SEO setup, and a smooth go-live." },
+    { number: "05", title: "Growth & Support", copy: "Ongoing maintenance, updates, and optimization." },
+  ],
+};
+
+/** ── TESTIMONIALS ────────────────────────────────────────────────────────── */
+export type Testimonial = {
+  quote: string;
+  author: string;
+  role: string;
+};
+
+export const testimonials: Testimonial[] = [
+  {
+    quote: "Working with Blüm transformed our brand. The website feels like poetry.",
+    author: "Founder",
+    role: "Kohaku Water",
+  },
+  {
+    quote: "They understood the artistic vision perfectly.",
+    author: "Digital Artist",
+    role: "True Life",
+  },
+];
+
+/** ── PRICING ─────────────────────────────────────────────────────────────── */
+export type PricingPackage = {
+  name: string;
+  price: string;
+  description: string;
+  features: string[];
+  popular?: boolean;
+  ctaLabel: string;
+  ctaHref: string;
+};
+
+export const pricingSection = {
+  eyebrow: "Pricing",
+  headline: "Packages that grow with you.",
+  subheadline: "Transparent tiered pricing for startups, brands, and growing businesses.",
+};
+
+export const pricingPackages: PricingPackage[] = [
+  {
+    name: "Blossom Package",
+    price: "$2,900",
+    description: "Perfect for startups and personal brands launching their first presence.",
+    features: [
+      "One-page custom website",
+      "Basic branding (colors, typography)",
+      "2 revision rounds",
+      "Mobile-responsive design",
+    ],
+    ctaLabel: "Get Started",
+    ctaHref: "/contact",
+  },
+  {
+    name: "Bloom Package",
+    price: "$5,900",
+    description: "Our most popular — full website with brand refresh and launch support.",
+    features: [
+      "Multi-page custom website",
+      "Logo refresh + brand assets",
+      "SEO setup & analytics",
+      "4 weeks post-launch support",
+      "4 revision rounds",
+    ],
+    popular: true,
+    ctaLabel: "Get Started",
+    ctaHref: "/contact",
+  },
+  {
+    name: "Garden Package",
+    price: "$9,900",
+    description: "Complete brand and digital presence for established businesses.",
+    features: [
+      "Full custom website",
+      "Complete brand identity package",
+      "E-commerce integration",
+      "3 months maintenance included",
+      "Priority support",
+    ],
+    ctaLabel: "Get Started",
+    ctaHref: "/contact",
+  },
+];
+
+export type PricingTier = {
+  service: string;
+  priceRange: string;
+  bestFor: string;
+  notes: string;
+};
+
+export const pricingTiers: PricingTier[] = [
+  {
+    service: "Basic Landing Page",
+    priceRange: "$1,200 – $2,500",
+    bestFor: "Startups, personal brands",
+    notes: "1–2 weeks, 3 revisions",
+  },
+  {
+    service: "Premium Custom Website",
+    priceRange: "$4,500 – $8,500",
+    bestFor: "Small-medium businesses",
+    notes: "4–8 weeks, full design + dev",
+  },
+  {
+    service: "E-commerce Website",
+    priceRange: "$6,500 – $12,000",
+    bestFor: "Online stores",
+    notes: "Includes Shopify or custom",
+  },
+  {
+    service: "Full Brand Identity Package",
+    priceRange: "$3,000 – $6,000",
+    bestFor: "New businesses",
+    notes: "Logo + guidelines + website assets",
+  },
+  {
+    service: "Mobile App UI/UX Design",
+    priceRange: "$5,500 – $15,000+",
+    bestFor: "Apps & SaaS",
+    notes: "Per platform or both",
+  },
+  {
+    service: "Website Redesign",
+    priceRange: "$3,800 – $7,500",
+    bestFor: "Existing sites",
+    notes: "Faster turnaround",
+  },
+  {
+    service: "Monthly Maintenance",
+    priceRange: "$350 – $850 / mo",
+    bestFor: "All clients",
+    notes: "Updates, backups, security",
+  },
+  {
+    service: "Retainer (Design + Dev)",
+    priceRange: "$2,000 – $5,000 / mo",
+    bestFor: "Ongoing partnership",
+    notes: "10–30 hours/month",
+  },
+];
+
+export const pricingAddons = [
+  { name: "Motion / Animations", price: "+$800 – $2,000" },
+  { name: "Advanced SEO", price: "+$1,500" },
+  { name: "3D / Interactive elements", price: "+$2,000+" },
+];
 
 /** ── VIDEO REVEAL (Home) ─────────────────────────────────────────────────── */
 export const videoSection = {
-  /** Use a local file (/vide.mp4) or external HLS URL */
   videoSrc: "/site.mp4",
   alt: "Motion showcase reel",
 };
@@ -113,31 +403,45 @@ export type ProjectItem = {
 
 export const projects: ProjectItem[] = [
   {
-    title: "Creative Orion Agency",
-    category: "Brand Website",
+    title: "Kohaku Water",
+    category: "E-commerce",
     year: "2025",
-    image: "/firstbg.jpg",
-    tags: ["Next.js", "GSAP", "Responsive"],
+    image: "/project1.jpg",
+    tags: ["Shopify", "Lifestyle", "Responsive"],
   },
   {
-    title: "Studio Portfolio",
-    category: "Portfolio",
+    title: "True Life",
+    category: "Digital Art Platform",
+    year: "2025",
+    image: "/project2.jpg",
+    tags: ["NFT", "Web App", "Motion"],
+  },
+  {
+    title: "Nebula",
+    category: "Music App UI",
     year: "2026",
-    image: "/n.jpeg",
-    tags: ["React", "Motion", "Tailwind"],
+    image: "/project3.jpg",
+    tags: ["Mobile UI", "Figma", "Animation"],
   },
   {
-    title: "Product Launch",
-    category: "Landing Page",
+    title: "GreenMotive",
+    category: "Eco Brand",
     year: "2025",
-    image: "/mb.jpeg",
-    tags: ["TypeScript", "Framer Motion"],
+    image: "/project4.jpg",
+    tags: ["Branding", "Next.js", "GSAP"],
+  },
+  {
+    title: "Desert Bloom",
+    category: "Creative UI",
+    year: "2026",
+    image: "/project5.jpg",
+    tags: ["UI/UX", "Art Direction"],
   },
   {
     title: "Motion Showcase",
     category: "Interactive",
     year: "2026",
-    image: "/firstbg.png",
+    image: "/project8.webp",
     tags: ["Three.js", "WebGL", "GSAP"],
   },
 ];
@@ -172,38 +476,39 @@ export const techCategories = [
 /** ── ABOUT PAGE ──────────────────────────────────────────────────────────── */
 export const aboutContent = {
   eyebrow: "About",
-  headline: "Design + Front-End, powered by motion",
-  bio: "I'm a Creative digital designer & Front-End developer working at the intersection of visual design, UX, and motion. I build expressive websites that feel bold, intuitive, and built to stand out—while keeping accessibility and Core Web Vitals in mind.",
+  headline: "Design + strategy, inspired by nature",
+  bio: "Blüm Desing is a boutique web design studio that creates digital experiences inspired by nature's elegance. We believe beautiful design isn't just decoration — it's strategy that connects. We build expressive websites and brands that feel bold, intuitive, and built to stand out — while keeping accessibility and Core Web Vitals in mind.",
   profileImage: "/mb.jpeg",
   profileFallback: "/logonobg.png",
   name: "Pushpraj Bhadana",
-  role: "Front-End Developer • Faridabad, India",
+  role: "Creative Director • Faridabad, India",
 };
 
 export const skills = [
   "React",
   "Next.js",
   "TypeScript",
-  "Redux Toolkit",
+  "UI/UX Design",
+  "Brand Identity",
   "Tailwind CSS",
   "GSAP",
   "Framer Motion",
   "Accessibility (WCAG 2.1)",
   "Core Web Vitals",
-  "REST APIs",
-  "Jest + React Testing Library",
+  "Figma",
+  "E-commerce (Shopify)",
 ];
 
 export const experiences = [
   {
     period: "December 2025 – Present",
-    title: "Freelance Front-End Developer",
-    org: "Self-Employed",
+    title: "Freelance Front-End Developer & Designer",
+    org: "Blüm Desing",
     bullets: [
       "Redesigned UI/UX for 3+ client projects, boosting user engagement by 40%.",
       "Built modular React component libraries, reducing feature delivery time by 35%.",
       "Optimised Lighthouse scores from 55 to 90+ via lazy loading, code-splitting, and CDN strategies.",
-      "Integrated third-party REST APIs (CMS, maps) and managed async flows with Axios and custom hooks.",
+      "Delivered full brand identity packages including logo, guidelines, and website assets.",
     ],
   },
   {
@@ -251,11 +556,13 @@ export const education = [
 /** ── CONTACT PAGE ────────────────────────────────────────────────────────── */
 export const contactContent = {
   headline: "Get in Touch",
-  body: "Have a project in mind? Let's create something amazing together.",
+  body: "Ready to make something beautiful? Let's create a digital presence that grows with you.",
   email: "pushpbhadana@gmail.com",
   phone: "+91 99112 90075",
   phoneHref: "tel:+919911290075",
   location: "Faridabad, India",
+  calendlyUrl: "/contact",
+  calendlyLabel: "Book a Discovery Call",
 };
 
 export const socialLinks = [
@@ -267,10 +574,14 @@ export const socialLinks = [
 
 /** ── FOOTER ──────────────────────────────────────────────────────────────── */
 export const footerContent = {
-  tagline: "Building digital experiences that perform.",
+  tagline: "Let's create a digital presence that grows with you.",
+  ctaHeadline: "Ready to make something beautiful?",
+  ctaButton: { label: "Book a Discovery Call", href: "/contact" },
   copyright: `© ${new Date().getFullYear()} ${siteMeta.name}. All rights reserved.`,
   links: [
-    { label: "Work", href: "/projects" },
+    { label: "Work", href: "/#work" },
+    { label: "Services", href: "/#services" },
+    { label: "Pricing", href: "/#pricing" },
     { label: "About", href: "/about" },
     { label: "Contact", href: "/contact" },
   ],

@@ -51,7 +51,14 @@ export default function Contact() {
           {contactContent.headline}
         </h1>
 
-        <p className="text-xl text-gray-400 mb-16 max-w-2xl">{contactContent.body}</p>
+        <p className="text-xl text-gray-400 mb-8 max-w-2xl">{contactContent.body}</p>
+
+        <a
+          href={contactContent.calendlyUrl}
+          className="inline-block mb-16 rounded-full bg-white px-6 py-3 text-sm font-medium text-black transition-colors hover:bg-gray-200"
+        >
+          {contactContent.calendlyLabel}
+        </a>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 pb-8">
           {/* ── Contact form ── */}
