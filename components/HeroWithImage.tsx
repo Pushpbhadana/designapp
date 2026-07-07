@@ -5,24 +5,14 @@ import Link from 'next/link';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Flip } from 'gsap/Flip';
-import LogoLoop from './LogoLoop';
 import { SiReact, SiNextdotjs, SiTypescript, SiTailwindcss } from 'react-icons/si';
 import { heroContent } from '@/lib/site-content';
 
-/**
- * ── HERO WITH IMAGE REVEAL ────────────────────────────────────────────────
- * Scroll-pinned hero: thumbnail flips to fullscreen video on scroll.
- * Edit all text, stats, and media paths in lib/site-content.ts → heroContent.
- * Animation logic below — only touch if changing motion behaviour.
- * ───────────────────────────────────────────────────────────────────────────
- */
-
-/** Tech logos in the stats row — swap icons/links here */
 const techLogos = [
-  { node: <SiReact />, title: "React", href: "https://react.dev" },
-  { node: <SiNextdotjs />, title: "Next.js", href: "https://nextjs.org" },
-  { node: <SiTypescript />, title: "TypeScript", href: "https://www.typescriptlang.org" },
-  { node: <SiTailwindcss />, title: "Tailwind CSS", href: "https://tailwindcss.com" },
+  { node: <SiReact />, title: 'React', href: 'https://react.dev' },
+  { node: <SiNextdotjs />, title: 'Next.js', href: 'https://nextjs.org' },
+  { node: <SiTypescript />, title: 'TypeScript', href: 'https://www.typescriptlang.org' },
+  { node: <SiTailwindcss />, title: 'Tailwind CSS', href: 'https://tailwindcss.com' },
 ];
 
 gsap.registerPlugin(ScrollTrigger, Flip);
@@ -50,6 +40,10 @@ export default function HeroWithImageReveal() {
     if (el && !statsRefs.current.includes(el)) statsRefs.current.push(el);
   };
 
+  const addToLogoRefs = (el: HTMLElement | null) => {
+    if (el && !logoRefs.current.includes(el)) logoRefs.current.push(el);
+  };
+
   const initAnimation = () => {
     if (ctxRef.current) ctxRef.current.revert();
 
@@ -60,6 +54,7 @@ export default function HeroWithImageReveal() {
       const hero = heroRef.current;
       if (!fullScreenImg || !smallImg || !fullScreenWrap || !hero) return;
 
+      // Original Flip: small → fullscreen
       const flipTween = Flip.fit(fullScreenImg, smallImg, {
         duration: 1,
         ease: 'none',
@@ -88,36 +83,52 @@ export default function HeroWithImageReveal() {
 
       tl.add(flip.play());
 
+      /* ── ALL TEXT ANIMATIONS END AT TIME = 1 ──
+         Recalculated start positions so every tween finishes exactly
+         when the video fully expands. */
+      const DUR = 1; // flip duration
+
+      // Headlines: slide in from left/right (duration 0.7 → start at 0.3)
       if (topLineFirstRef.current) {
-        tl.from(topLineFirstRef.current, { xPercent: -250, ease: 'power1.in', duration: 0.5 }, '0.5');
+        tl.from(topLineFirstRef.current, { xPercent: -250, ease: 'power1.in', duration: 0.7 }, DUR - 0.7);
       }
       if (topLineSecondRef.current) {
-        tl.from(topLineSecondRef.current, { xPercent: 250, ease: 'power1.in', duration: 0.5 }, '0.5');
+        tl.from(topLineSecondRef.current, { xPercent: 250, ease: 'power1.in', duration: 0.7 }, DUR - 0.7);
       }
-      if (readMoreRef.current) {
-        tl.from(readMoreRef.current, { scale: 0.8, opacity: 0, duration: 0.4 }, '0.9');
-      }
+
+      // Stats: rise up (duration 0.35 → start at 0.65)
       if (statsRefs.current.length) {
         tl.from(
           statsRefs.current,
-          { y: 200, opacity: 0, stagger: 0.08, duration: 0.5, ease: 'power1.in' },
-          '0.65'
+          { y: 200, opacity: 0, stagger: 0.08, duration: 0.35, ease: 'power1.in' },
+          DUR - 0.35
         );
       }
+
+      // Partner title & text (both end at 1, same start)
       if (partnerTitleRef.current) {
-        tl.from(partnerTitleRef.current, { y: 200, duration: 0.1, ease: 'power1.in' }, '0.75');
+        tl.from(partnerTitleRef.current, { y: 200, duration: 0.25, ease: 'power1.in' }, DUR - 0.25);
       }
       if (partnerTextRef.current) {
-        tl.from(partnerTextRef.current, { y: 200, opacity: 0, duration: 0.1, ease: 'power1.in' }, '0.8');
+        tl.from(partnerTextRef.current, { y: 200, opacity: 0, duration: 0.2, ease: 'power1.in' }, DUR - 0.2);
       }
+
+      // Logos (duration 0.5 → start at 0.5)
       if (logoRefs.current.length) {
-        tl.from(logoRefs.current, { opacity: 0, x: -20, stagger: 0.07, duration: 0.5 }, '0.9');
+        tl.from(logoRefs.current, { opacity: 0, x: -20, stagger: 0.07, duration: 0.5 }, DUR - 0.5);
       }
+
+      // Future text (subheadline) (duration 0.5 → start at 0.5)
       if (futureTextRef.current) {
-        tl.from(futureTextRef.current, { y: 200, opacity: 0, duration: 0.5 }, '1.0');
+        tl.from(futureTextRef.current, { y: 200, opacity: 0, duration: 0.5 }, DUR - 0.5);
+      }
+
+      // Read more + CTA buttons (both end at 1)
+      if (readMoreRef.current) {
+        tl.from(readMoreRef.current, { scale: 0.8, opacity: 0, duration: 0.3 }, DUR - 0.3);
       }
       if (ctaButtonRef.current) {
-        tl.from(ctaButtonRef.current, { scale: 0.9, opacity: 0, duration: 0.4 }, '1.05');
+        tl.from(ctaButtonRef.current, { scale: 0.9, opacity: 0, duration: 0.3 }, DUR - 0.3);
       }
     }, heroRef);
 
@@ -140,49 +151,52 @@ export default function HeroWithImageReveal() {
   }, []);
 
   return (
-    <div className="relative">
-      {/* ── HERO: light background section (edit copy via heroContent) ── */}
-      <div ref={heroRef} className="relative bg-[#fdfff5] min-h-screen overflow-hidden">
-
-          <div className="absolute inset-0 top-1 left-0 z-10">
-            
-            <img
-              src="/mm.jpg"
-              alt="Flowers"
-              className="w-full object-cover h-full"
-            />     
-            
-          </div>
-
+    <div className="relative font-body">
+      {/* ── HERO (pinned) ── */}
+      <div ref={heroRef} className="relative min-h-screen overflow-hidden">
         <div className="relative z-10 flex flex-col min-h-screen">
-          <div className="flex-grow flex flex-col justify-center px-6 md:px-12 py-1 md:py-0 mt-20">
+          <div className="flex-grow flex flex-col justify-center px-6 md:px-14 py-10 md:py-0">
             <div className="max-w-7xl mx-auto w-full">
 
-              {/* Headline row + thumbnail (Flip target) */}
-              <div className="flex flex-wrap items-center gap-2 md:gap-5 mb-4 md:mb-6 mt-10">
+              {/* Eyebrow — cleaned up, Apple‑style */}
+              <div className="flex items-center gap-3 mb-10 md:mb-14">
+                <span className="h-px w-10 bg-black/20 hidden md:block" />
+                <span className="font-mono text-[11px] md:text-xs uppercase tracking-[0.28em] hidden md:block text-black/50">
+                  {heroContent.studioLabel}
+                </span>
+              </div>
+
+              {/* Headline row + video thumbnail */}
+              <div className="flex flex-wrap items-center gap-4 md:gap-8">
                 <h1
                   ref={topLineFirstRef}
-                  className="text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-bold transform scale-y-[1.5] tracking-tight text-black"
+                  className="font-display  text-5xl sm:text-7xl md:text-8xl lg:text-[7.5rem] leading-[0.92] tracking-tight text-black"
                 >
                   {heroContent.headlineFirst}
                 </h1>
 
-                <div className="relative w-[110px] h-[70px] sm:w-[160px] sm:h-[90px] md:w-[250px] md:h-[130px] mx-1 md:mx-3 rounded-2xl overflow-hidden shadow-xl border-2 border-white/30 hidden sm:block">
-                  <div ref={smallImgInnerRef} className="w-full h-full overflow-hidden">
-                    <video
-                      src={heroContent.thumbnailSrc}
-                      className="h-full w-full object-cover"
-                      autoPlay
-                      loop
-                      muted
-                      playsInline
-                    />
+                {/* Video card – now a clean, subtle container */}
+                <div className="relative w-[120px] h-[80px] sm:w-[170px] sm:h-[105px] md:w-[240px] md:h-[150px] mx-1 md:mx-2 hidden sm:block">
+                  <div className="w-full h-full overflow-hidden border border-black/10 shadow-sm">
+                    <div ref={smallImgInnerRef} className="w-full h-full overflow-hidden">
+                      <video
+                        src={heroContent.thumbnailSrc}
+                        className="h-full w-full object-cover"
+                        autoPlay
+                        loop
+                        muted
+                        playsInline
+                      />
+                    </div>
                   </div>
+                  <p className="absolute left-0 top-full mt-2 font-mono text-[9px] md:text-[10px] uppercase tracking-[0.18em] text-black/30 whitespace-nowrap">
+                    Motion Study
+                  </p>
                 </div>
 
                 <h1
                   ref={topLineSecondRef}
-                  className="text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-bold transform scale-y-[1.5] mt-10 tracking-tight text-black leading-none"
+                  className="font-display  text-5xl sm:text-7xl md:text-8xl lg:text-[7.5rem] leading-[0.92] tracking-tight text-black"
                 >
                   {heroContent.headlineSecond}
                 </h1>
@@ -191,97 +205,98 @@ export default function HeroWithImageReveal() {
               {/* Subheadline + CTAs */}
               <div
                 ref={ctaButtonRef}
-                className="mt-8 md:mt-20 flex flex-col gap-6 md:flex-row md:items-end md:justify-between"
+                className="mt-12 md:mt-24 flex flex-col gap-8 md:flex-row md:items-end md:justify-between border-t border-black/5 pt-8"
               >
-                <div ref={futureTextRef} className="max-w-2xl">
-                  <p className="text-lg md:text-xl leading-relaxed text-gray-700">
+                <div ref={futureTextRef} className="max-w-xl">
+                  <p className="text-base md:text-lg leading-relaxed text-black/60">
                     {heroContent.subheadline}
                   </p>
                 </div>
-                <div className="flex flex-wrap items-center gap-3 mt-4 md:mt-0">
+                <div className="flex flex-wrap items-center gap-3">
                   <Link
                     href={heroContent.primaryCta.href}
                     ref={readMoreRef}
-                    className="inline-block rounded-full border border-black/20 bg-black px-5 py-2 text-sm font-medium text-white transition-colors hover:bg-gray-800 md:text-base"
+                    className="inline-block rounded-none bg-black px-6 py-3 text-xs md:text-sm font-mono uppercase tracking-[0.14em] text-white transition-colors hover:bg-gray-800"
                   >
                     {heroContent.primaryCta.label}
                   </Link>
                   <Link
                     href={heroContent.secondaryCta.href}
-                    className="inline-block rounded-full border border-black bg-transparent px-5 py-2 text-sm font-medium text-black transition-colors hover:bg-black/5 md:text-base"
+                    className="inline-block rounded-none border border-black/30 px-6 py-3 text-xs md:text-sm font-mono uppercase tracking-[0.14em] text-black transition-colors hover:bg-black hover:text-white"
                   >
                     {heroContent.secondaryCta.label}
                   </Link>
                 </div>
               </div>
 
-              {/* Stats row — edit heroContent.stats in site-content.ts */}
-              <div className="grid grid-cols-2 md:grid-cols-7 gap-6 mt-3 w-screen md:hidden">
+              {/* Stats — light, minimal lines */}
+              <div className="mt-10 md:mt-14 flex flex-wrap md:flex-nowrap gap-x-10 gap-y-6 border-y border-black/5 py-6">
                 {heroContent.stats.map((stat) => (
                   <div
                     key={stat.label}
                     ref={addToStatsRefs}
-                    className="transition-all hover:-translate-y-1 duration-300"
+                    className="flex-1 min-w-[110px] border-l border-black/5 pl-5 first:border-l-0 first:pl-0"
                   >
-                    <div className="text-5xl md:text-6xl font-black text-black">
+                    <div className="font-mono text-2xl md:text-3xl font-medium text-black">
                       {stat.value}
-                      <span className="text-3xl">{stat.suffix}</span>
+                      <span className="text-black/30">{stat.suffix}</span>
                     </div>
-                    <div className="text-gray-500 font-medium text-sm md:text-base uppercase tracking-wide mt-1">
+                    <div className="mt-1 font-mono text-[10px] md:text-[11px] uppercase tracking-[0.16em] text-black/40">
                       {stat.label}
                     </div>
                   </div>
                 ))}
-
-                <div className="col-span-2 my-5 sm:mt-0 md:col-span-1">
-                  <div className="text-xl md:text-2xl font-bold text-black border-l-4 border-black pl-4">
-                    {heroContent.studioLabel}
-                  </div>
-                </div>
-
-                {/* Tech logo loop */}
-                <div className="text-black col-span-3 relative h-[100px] overflow-hidden">
-                  <LogoLoop
-                    logos={techLogos}
-                    speed={100}
-                    direction="left"
-                    logoHeight={60}
-                    gap={60}
-                    hoverSpeed={0}
-                    scaleOnHover
-                    fadeOut
-                    fadeOutColor="#fdfff5"
-                    ariaLabel="Technology partners"
-                  />
-                </div>
               </div>
 
-              {/* Partner section */}
-              <div className="grid md:grid-cols-2 gap-5 items-start my-3 md:mt-20">
+              {/* Partner / positioning — cleaner card */}
+              <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-start mt-14 md:mt-20">
                 <div>
                   <h2
                     ref={partnerTitleRef}
-                    className="text-3xl md:text-5xl font-bold tracking-tight text-black leading-tight"
+                    className="font-display  text-3xl md:text-5xl text-black leading-[1.05]"
                   >
                     {heroContent.partnerTitle}
                   </h2>
                   <p
                     ref={partnerTextRef}
-                    className="text-gray-600 text-lg md:text-xl mt-4 leading-relaxed max-w-lg"
+                    className="text-black/60 text-base md:text-lg mt-5 leading-relaxed max-w-md"
                   >
                     {heroContent.partnerCopy}
                   </p>
-                </div>
-                <div className="bg-gray-50 p-6 md:p-8 rounded-3xl my-3">
-                  <div className="text-6xl md:text-7xl font-black text-black">
-                    {heroContent.highlightValue}
-                    <span className="text-3xl">{heroContent.highlightSuffix}</span>
+
+                  <div className="mt-8 flex flex-wrap gap-2">
+                    {techLogos.map((logo) => (
+                      <a
+                        key={logo.title}
+                        href={logo.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        ref={addToLogoRefs}
+                        className="flex items-center gap-2 border border-black/10 px-3 py-1.5 text-black/60 hover:text-black hover:border-black/40 transition-colors"
+                      >
+                        <span className="text-sm">{logo.node}</span>
+                        <span className="font-mono text-[10px] uppercase tracking-[0.14em]">
+                          {logo.title}
+                        </span>
+                      </a>
+                    ))}
                   </div>
-                  <p className="text-gray-500 text-sm uppercase tracking-wider mt-2">
+                </div>
+
+                {/* Field Note – subtle card */}
+                <div className="border border-black/10 p-7 md:p-9">
+                  <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-black/40">
+                    Field Note
+                  </div>
+                  <div className="font-display text-6xl md:text-7xl text-black mt-3">
+                    {heroContent.highlightValue}
+                    <span className="text-2xl text-black/30">{heroContent.highlightSuffix}</span>
+                  </div>
+                  <p className="text-black/40 text-xs uppercase tracking-[0.14em] mt-2 font-mono">
                     {heroContent.highlightLabel}
                   </p>
-                  <hr className="my-4 border-gray-200" />
-                  <p className="text-gray-700 font-medium">{heroContent.highlightCopy}</p>
+                  <div className="h-px bg-black/5 my-5" />
+                  <p className="text-black/60 leading-relaxed">{heroContent.highlightCopy}</p>
                 </div>
               </div>
 
@@ -290,7 +305,7 @@ export default function HeroWithImageReveal() {
         </div>
       </div>
 
-      {/* Fullscreen video — Flip animation source (heroContent.videoSrc) */}
+      {/* Fullscreen video – same Flip target, now with a cleaner overlay */}
       <div
         ref={fullScreenWrapRef}
         className="full-screen fixed inset-0 w-full h-screen z-20 pointer-events-none"
@@ -307,8 +322,14 @@ export default function HeroWithImageReveal() {
             loop
             playsInline
           />
-          <div className="absolute inset-0 flex flex-col items-center justify-end pb-20 text-white text-center bg-black/20">
-            <p className="text-xl md:text-3xl font-medium tracking-wide backdrop-blur-sm px-4 py-2 rounded-full">
+          {/* Minimal gradient overlay for subtle depth */}
+          <div
+            className="absolute inset-0"
+            style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0) 40%)' }}
+          />
+          <div className="absolute inset-x-0 bottom-0 flex flex-col items-center pb-10 text-white text-center">
+            <span className="w-px h-6 bg-white/40 mb-3" />
+            <p className="font-mono text-[11px] md:text-xs uppercase tracking-[0.3em]">
               {heroContent.scrollHint}
             </p>
           </div>

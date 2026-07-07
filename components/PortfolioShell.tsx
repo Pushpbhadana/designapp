@@ -7,7 +7,6 @@ import PillNav from './PillNav';
 import PageLoader from './PageLoader';
 import SiteFooter from './SiteFooter';
 import { navCta, navItems } from '@/lib/site-content';
-import SplashCursor from './SplashCursor';
 
 /**
  * ── PORTFOLIO SHELL ───────────────────────────────────────────────────────
@@ -23,19 +22,6 @@ export default function PortfolioShell({ children }: { children: ReactNode }) {
       <PageLoader>
         {/* ── Global navigation — edit items in lib/site-content.ts ── */}
 
-
-        <SplashCursor
-          DENSITY_DISSIPATION={3.5}
-          VELOCITY_DISSIPATION={2}
-          PRESSURE={0.1}
-          CURL={3}
-          SPLAT_RADIUS={0.2}
-          SPLAT_FORCE={6000}
-          COLOR_UPDATE_SPEED={10}
-          SHADING
-          RAINBOW_MODE={false}
-          COLOR="#d084a9"
-        />
         <PillNav
           logo="/logo.svg"
           logoAlt="Company Logo"
