@@ -1,5 +1,5 @@
 "use client";
-
+import { Analytics } from "@vercel/analytics/next"
 import GalleryParallaxFlip from '@/components/GalleryParellelFlex';
 import HeroWithImageReveal from '@/components/HeroWithImage';
 import PortfolioShell from '@/components/PortfolioShell';
@@ -85,6 +85,7 @@ export default function Home() {
         </section>
 
       </main>
+      <Analytics/>
     </PortfolioShell>
   );
 }
