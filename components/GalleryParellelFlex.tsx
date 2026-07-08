@@ -210,7 +210,7 @@ export default function GalleryParallaxFlip() {
           </div>
 
           {/* Column 2 */}
-          <div ref={col2Ref} className="will-change-transform flex-1 md:relative">
+          <div ref={col2Ref} className="will-change-transform flex-1 md:relative hidden md:block">
             {/* same images as before */}
             <div className="imgSel">
               <img src="/project5.jpg" alt="gallery" className="w-full p-1 rounded-[6%]" />

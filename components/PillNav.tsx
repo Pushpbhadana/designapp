@@ -11,8 +11,6 @@ export type PillNavItem = {
 };
 
 export interface PillNavProps {
-  logo: string;
-  logoAlt?: string;
   items: PillNavItem[];
   activeHref?: string;
   className?: string;
@@ -32,8 +30,6 @@ export interface PillNavProps {
 }
 
 const PillNav: React.FC<PillNavProps> = ({
-  logo,
-  logoAlt = 'Logo',
   items,
   activeHref,
   className = '',
@@ -44,7 +40,7 @@ const PillNav: React.FC<PillNavProps> = ({
   pillTextColor,
   onMobileMenuClick,
   initialLoadAnimation = true,
-  connectButtonLabel = 'Connect',
+  connectButtonLabel = 'Get a Quote today!',
   connectButtonHref = '/contact',
   logoSize,
   logoWidth,
@@ -66,24 +62,6 @@ const PillNav: React.FC<PillNavProps> = ({
   const connectButtonTweenRef = useRef<gsap.core.Tween | null>(null);
   const resizeTimeoutRef = useRef<NodeJS.Timeout | undefined>(undefined);
 
-  const [isInverted, setIsInverted] = useState(true); // start inverted
-
-  useEffect(() => {
-  // Only run on client
-  if (typeof window === "undefined") return;
-
-  const handleScroll = () => {
-    const scrollThreshold = window.innerHeight * 0.1; // 3% of viewport height
-    const scrolled = window.scrollY;
-    setIsInverted(scrolled < scrollThreshold); // invert if not past threshold
-  };
-
-  // Set initial state
-  handleScroll();
-
-  window.addEventListener("scroll", handleScroll, { passive: true });
-  return () => window.removeEventListener("scroll", handleScroll);
-}, []);
   // Compute logo container size (width & height)
   const getLogoSize = (): { width: string; height: string } => {
     const defaultSize = 'var(--nav-h)';
@@ -286,21 +264,6 @@ const PillNav: React.FC<PillNavProps> = ({
     });
   }, [ease]);
 
-  const handleLogoEnter = useCallback(() => {
-    const img = logoImgRef.current;
-    if (!img) return;
-    if (logoTweenRef.current) {
-      logoTweenRef.current.kill();
-    }
-    gsap.set(img, { rotate: 0 });
-    logoTweenRef.current = gsap.to(img, {
-      rotate: 360,
-      duration: 0.2,
-      ease,
-      overwrite: 'auto'
-    });
-  }, [ease]);
-
   const handleConnectButtonEnter = useCallback(() => {
     const button = connectButtonRef.current;
     if (!button) return;
@@ -310,8 +273,7 @@ const PillNav: React.FC<PillNavProps> = ({
     }
     connectButtonTweenRef.current = gsap.to(button, {
       scale: 1.1,
-      duration: 0.2,
-      ease: 'power2.inOut',
+      transition: 'all 0s ease',
       overwrite: 'auto',
       backgroundColor: '#000',
       color: '#fff'
@@ -427,40 +389,18 @@ const PillNav: React.FC<PillNavProps> = ({
         >
           {/* Logo */}
           <div className="md:absolute md:left-4">
-            {isInternalLink(logoItem?.href) ? (
-              <Link
-                href={logoItem.href}
-                aria-label="Home"
-                onMouseEnter={handleLogoEnter}
-                ref={logoRef}
-                className="inline-flex items-start justify-start overflow-hidden transition-transform hover:scale-105 w-[120px] h-[60px] md:mt-5  md:w-[150px] md:h-[80px]"
-              >
-                <img
-                  src={"/logonobg.svg"}
-                  alt={logoAlt}
-                  ref={logoImgRef}
-                  className="w-full h-full object-cover block"
-                  style={{
-                    filter: isInverted ? "invert(1)" : "invert(0)",
-                  }}
-                />
-              </Link>
-            ) : (
-              <a
-                href={logoItem?.href || '/'}
-                aria-label="Home"
-                onMouseEnter={handleLogoEnter}
-                ref={logoRef}
-                className="rounded-full p-2 inline-flex items-center justify-center overflow-hidden transition-transform hover:scale-105"
-                style={{
-                  width: logoContainerStyle.width,
-                  height: logoContainerStyle.height,
-                  background: 'var(--base, #000)'
-                }}
-              >
-                <img src={logo} alt={logoAlt} ref={logoImgRef} className="w-full h-full object-cover block" />
-              </a>
-            )}
+            <Link
+              href={logoItem.href}
+              aria-label="Home"
+              ref={logoRef}
+              className="inline-flex items-center justify-center overflow-hidden transition-transform hover:scale-105 w-[170px] md:w-[210px] backdrop-blur-sm bg-[#FDFFF5]/70 rounded-full"
+            >
+              <h2 className="flex items-center gap-1 text-2xl tracking-tighter md:text-4xl lg:text-4xl lowercase">
+                bl
+                <span className="text-red-500">ü</span>
+                m&nbsp;design
+              </h2>
+            </Link>
           </div>
 
           {/* Desktop Menu - Centered */}
@@ -579,7 +519,8 @@ const PillNav: React.FC<PillNavProps> = ({
                   paddingRight: 'var(--pill-pad-x)',
                   background: pillColor,
                   color: resolvedPillTextColor,
-                  transform: 'scale(1)'
+                  transform: 'scale(1)',
+                  borderColor: resolvedPillTextColor
                 }}
               >
                 {connectButtonLabel}
@@ -666,7 +607,7 @@ const PillNav: React.FC<PillNavProps> = ({
                       style={defaultStyle}
                       onMouseEnter={hoverIn}
                       onMouseLeave={hoverOut}
-                      onClick={() => setIsMobileMenuOpen(false)}
+                      onClick={toggleMobileMenu}   // ✅ FIX: calls toggleMobileMenu
                     >
                       {item.label}
                     </Link>
@@ -677,7 +618,7 @@ const PillNav: React.FC<PillNavProps> = ({
                       style={defaultStyle}
                       onMouseEnter={hoverIn}
                       onMouseLeave={hoverOut}
-                      onClick={() => setIsMobileMenuOpen(false)}
+                      onClick={toggleMobileMenu}   // ✅ FIX: calls toggleMobileMenu
                     >
                       {item.label}
                     </a>
@@ -695,7 +636,7 @@ const PillNav: React.FC<PillNavProps> = ({
                     background: pillColor,
                     color: resolvedPillTextColor
                   }}
-                  onClick={() => setIsMobileMenuOpen(false)}
+                  onClick={toggleMobileMenu}   // ✅ FIX: calls toggleMobileMenu
                 >
                   {connectButtonLabel}
                 </Link>
@@ -707,7 +648,7 @@ const PillNav: React.FC<PillNavProps> = ({
                     background: pillColor,
                     color: resolvedPillTextColor
                   }}
-                  onClick={() => setIsMobileMenuOpen(false)}
+                  onClick={toggleMobileMenu}   // ✅ FIX: calls toggleMobileMenu
                 >
                   {connectButtonLabel}
                 </a>

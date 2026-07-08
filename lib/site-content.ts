@@ -25,7 +25,7 @@ export const navItems = [
 ] as const;
 
 export const navCta = {
-  label: "Connect",
+  label: "get in touch ➔",
   href: "/contact",
 };
 

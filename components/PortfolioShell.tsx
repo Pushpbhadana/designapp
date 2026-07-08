@@ -23,8 +23,6 @@ export default function PortfolioShell({ children }: { children: ReactNode }) {
         {/* ── Global navigation — edit items in lib/site-content.ts ── */}
 
         <PillNav
-          logo="/logo.svg"
-          logoAlt="Company Logo"
           items={[
             { label: 'Logo', href: '/' },
             ...navItems.map((item) => ({ label: item.label, href: item.href })),
