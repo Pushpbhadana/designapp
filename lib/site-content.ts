@@ -8,10 +8,10 @@
 
 /** ── BRAND & SEO ───────────────────────────────────────────────────────── */
 export const siteMeta = {
-  name: "blüm desing",
-  title: "blüm desing | Boutique Web Design & Brand Studio",
+  name: "blüm design",
+  title: "blüm design | Boutique Web Design & Brand Studio",
   description:
-    "Blüm Desing is a boutique web design studio creating digital experiences inspired by nature's elegance — websites, brands, and e-commerce that feel alive.",
+    "Blüm Design is a boutique web design studio creating digital experiences inspired by nature's elegance — websites, brands, and e-commerce that feel alive.",
   tagline: "We design digital experiences that bloom.",
 };
 
@@ -61,7 +61,7 @@ export const aboutSection = {
   eyebrow: "About Us",
   headline: "Digital experiences inspired by nature's elegance.",
   body:
-    "Blüm Desing is a boutique web design studio that creates digital experiences inspired by nature's elegance. We draw from organic rhythms and harmonious contrasts to build intuitive interfaces.",
+    "Blüm Design is a boutique web design studio that creates digital experiences inspired by nature's elegance. We draw from organic rhythms and harmonious contrasts to build intuitive interfaces.",
   body2: "We believe beautiful design isn't just decoration — it's strategy that connects brands with audiences. By blending grace with structure, we ensure every element serves a clear goal.",
   primaryCta: { label: "Learn More", href: "/about" },
 };
@@ -193,7 +193,7 @@ export const serviceCategories = [
 
 /** ── WHY CHOOSE ──────────────────────────────────────────────────────────── */
 export const whyChooseSection = {
-  eyebrow: "Why Choose Blüm Desing?",
+  eyebrow: "Why Choose Blüm Design?",
   items: [
     "Obsessed with beautiful, intentional design",
     "Fast delivery without sacrificing quality",
@@ -477,7 +477,7 @@ export const techCategories = [
 export const aboutContent = {
   eyebrow: "About",
   headline: "Design + strategy, inspired by nature",
-  bio: "Blüm Desing is a boutique web design studio that creates digital experiences inspired by nature's elegance. We believe beautiful design isn't just decoration — it's strategy that connects. We build expressive websites and brands that feel bold, intuitive, and built to stand out — while keeping accessibility and Core Web Vitals in mind.",
+  bio: "Blüm Design is a boutique web design studio that creates digital experiences inspired by nature's elegance. We believe beautiful design isn't just decoration — it's strategy that connects. We build expressive websites and brands that feel bold, intuitive, and built to stand out — while keeping accessibility and Core Web Vitals in mind.",
   profileImage: "/mb.jpeg",
   profileFallback: "/logonobg.png",
   name: "Pushpraj Bhadana",
@@ -503,7 +503,7 @@ export const experiences = [
   {
     period: "December 2025 – Present",
     title: "Freelance Front-End Developer & Designer",
-    org: "Blüm Desing",
+    org: "Blüm Design",
     bullets: [
       "Redesigned UI/UX for 3+ client projects, boosting user engagement by 40%.",
       "Built modular React component libraries, reducing feature delivery time by 35%.",
