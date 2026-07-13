@@ -69,7 +69,7 @@ export default function PricingSection() {
           ))}
         </div>
 
-        <div className="mt-16 overflow-x-auto rounded-xl border border-black/10 bg-white shadow-sm">
+        {/* <div className="mt-16 overflow-x-auto rounded-xl border border-black/10 bg-white shadow-sm">
           <table className="w-full min-w-[640px] text-left text-sm">
             <thead>
               <tr className="border-b border-black/10 bg-gray-50">
@@ -102,7 +102,7 @@ export default function PricingSection() {
               {addon.name} — {addon.price}
             </span>
           ))}
-        </div>
+        </div> */}
       </div>
     </section>
   );

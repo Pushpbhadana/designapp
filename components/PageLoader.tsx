@@ -36,14 +36,14 @@ export default function PageLoader({ children, onLoadingComplete }: PageLoaderPr
 
     // First morph: from initial rectangle to start shape (curved bottom)
     tl.to(maskPathRef.current, {
-      duration: 0.4,
+      duration: 0.04,
       morphSVG: startShapeRef.current,
       ease: 'power1.in',
     }, 0.7);
 
     // Second morph: from start shape to end shape (thin line)
     tl.to(maskPathRef.current, {
-      duration: 1,
+      duration: 0.02,
       morphSVG: endShapeRef.current,
       ease: 'power1.out',
     });

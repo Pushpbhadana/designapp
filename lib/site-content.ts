@@ -17,7 +17,6 @@ export const siteMeta = {
 
 /** ── NAVIGATION ────────────────────────────────────────────────────────── */
 export const navItems = [
-  { label: "Home", href: "/" },
   { label: "About", href: "/#about-home" },
   { label: "Services", href: "/#services" },
   { label: "Work", href: "/#work" },
@@ -25,8 +24,8 @@ export const navItems = [
 ] as const;
 
 export const navCta = {
-  label: "get in touch ➔",
-  href: "/contact",
+  label: "Connect",
+  href: "#contact",
 };
 
 /** ── HERO (Home) ─────────────────────────────────────────────────────────── */
@@ -63,7 +62,7 @@ export const aboutSection = {
   body:
     "Blüm Design is a boutique web design studio that creates digital experiences inspired by nature's elegance. We draw from organic rhythms and harmonious contrasts to build intuitive interfaces.",
   body2: "We believe beautiful design isn't just decoration — it's strategy that connects brands with audiences. By blending grace with structure, we ensure every element serves a clear goal.",
-  primaryCta: { label: "Learn More", href: "/about" },
+  primaryCta: { label: "Get in Touch ➔", href: "#contact" },
 };
 
 /** ── INTRO STRIP (Home) ────────────────────────────────────────────────── */
@@ -265,7 +264,7 @@ export const pricingPackages: PricingPackage[] = [
       "Mobile-responsive design",
     ],
     ctaLabel: "Get Started",
-    ctaHref: "/contact",
+    ctaHref: "#contact",
   },
   {
     name: "Bloom Package",
@@ -280,7 +279,7 @@ export const pricingPackages: PricingPackage[] = [
     ],
     popular: true,
     ctaLabel: "Get Started",
-    ctaHref: "/contact",
+    ctaHref: "#contact",
   },
   {
     name: "Garden Package",
@@ -294,7 +293,7 @@ export const pricingPackages: PricingPackage[] = [
       "Priority support",
     ],
     ctaLabel: "Get Started",
-    ctaHref: "/contact",
+    ctaHref: "#contact",
   },
 ];
 
@@ -364,7 +363,7 @@ export const pricingAddons = [
 
 /** ── VIDEO REVEAL (Home) ─────────────────────────────────────────────────── */
 export const videoSection = {
-  videoSrc: "/site.mp4",
+  videoSrc: "/bgvid.mp4",
   alt: "Motion showcase reel",
 };
 
@@ -563,6 +562,7 @@ export const contactContent = {
   location: "Faridabad, India",
   calendlyUrl: "/contact",
   calendlyLabel: "Book a Discovery Call",
+  address: "Faridabad, Haryana, India",
 };
 
 export const socialLinks = [
@@ -576,13 +576,13 @@ export const socialLinks = [
 export const footerContent = {
   tagline: "Let's create a digital presence that grows with you.",
   ctaHeadline: "Ready to make something beautiful?",
-  ctaButton: { label: "Book a Discovery Call", href: "/contact" },
+  ctaButton: { label: "Book a Discovery Call", href: "#contact" },
   copyright: `© ${new Date().getFullYear()} ${siteMeta.name}. All rights reserved.`,
   links: [
-    { label: "Work", href: "/#work" },
-    { label: "Services", href: "/#services" },
-    { label: "Pricing", href: "/#pricing" },
-    { label: "About", href: "/about" },
-    { label: "Contact", href: "/contact" },
+    { label: "Work", href: "#work" },
+    { label: "Services", href: "#services" },
+    { label: "Pricing", href: "#pricing" },
+    { label: "About", href: "#about" },
+    { label: "Contact", href: "#contact" },
   ],
 };

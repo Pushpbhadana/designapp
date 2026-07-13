@@ -151,7 +151,7 @@ export default function HeroWithImageReveal() {
   }, []);
 
   return (
-    <div className="relative font-body">
+    <div className="relative font-body" id='home'>
       {/* ── HERO (pinned) ── */}
       <div ref={heroRef} className="relative min-h-screen overflow-hidden">
         <div className="relative z-10 flex flex-col min-h-screen">

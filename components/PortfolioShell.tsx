@@ -36,7 +36,6 @@ export default function PortfolioShell({ children }: { children: ReactNode }) {
           pillTextColor="#000000"
           initialLoadAnimation={false}
           connectButtonLabel={navCta.label}
-          connectButtonHref={navCta.href}
         />
 
         <motion.div

@@ -75,7 +75,7 @@ export default function Home() {
         <TestimonialsSection />
 
         {/* Video showcase */}
-        <section id="video-showcase">
+        <section id="contact">
           <VideoScrollAnimation
             videoSrc={videoSection.videoSrc}
             alt={videoSection.alt}

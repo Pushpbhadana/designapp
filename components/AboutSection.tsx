@@ -58,7 +58,7 @@ export default function AboutSection() {
           <p className="text-lg leading-relaxed text-gray-700">{aboutSection.body}</p>
           <p className="text-lg leading-relaxed text-gray-700">{aboutSection.body2}</p>
           <Link
-            href={aboutSection.primaryCta.href}
+            href='#contact'
             className="inline-block rounded-full border border-black/20 bg-black px-5 py-2 text-sm text-white transition-colors hover:bg-gray-800"
           >
             {aboutSection.primaryCta.label}

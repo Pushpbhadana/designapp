@@ -3,6 +3,10 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 import Link from 'next/link';
 import { gsap } from 'gsap';
+import { ScrollToPlugin } from 'gsap/dist/ScrollToPlugin'; // 👈 import the plugin
+
+// Register the plugin so GSAP can use it
+gsap.registerPlugin(ScrollToPlugin);
 
 export type PillNavItem = {
   label: string;
@@ -22,11 +26,9 @@ export interface PillNavProps {
   onMobileMenuClick?: () => void;
   initialLoadAnimation?: boolean;
   connectButtonLabel?: string;
-  connectButtonHref?: string;
-  // New props for logo sizing
-  logoSize?: string | number;   // square size, e.g. "50px" or 50
-  logoWidth?: string | number;  // explicit width (overrides logoSize)
-  logoHeight?: string | number; // explicit height (overrides logoSize)
+  logoSize?: string | number;
+  logoWidth?: string | number;
+  logoHeight?: string | number;
 }
 
 const PillNav: React.FC<PillNavProps> = ({
@@ -41,7 +43,6 @@ const PillNav: React.FC<PillNavProps> = ({
   onMobileMenuClick,
   initialLoadAnimation = true,
   connectButtonLabel = 'Get a Quote today!',
-  connectButtonHref = '/contact',
   logoSize,
   logoWidth,
   logoHeight,
@@ -62,7 +63,6 @@ const PillNav: React.FC<PillNavProps> = ({
   const connectButtonTweenRef = useRef<gsap.core.Tween | null>(null);
   const resizeTimeoutRef = useRef<NodeJS.Timeout | undefined>(undefined);
 
-  // Compute logo container size (width & height)
   const getLogoSize = (): { width: string; height: string } => {
     const defaultSize = 'var(--nav-h)';
     let w: string, h: string;
@@ -122,7 +122,6 @@ const PillNav: React.FC<PillNavProps> = ({
     if (label) gsap.set(label, { y: 0 });
     if (white) gsap.set(white, { y: h + 12, opacity: 0 });
 
-    // Kill existing timeline if any
     if (tlRefs.current[index]) {
       tlRefs.current[index]?.kill();
     }
@@ -154,7 +153,6 @@ const PillNav: React.FC<PillNavProps> = ({
   useEffect(() => {
     if (!mounted) return;
 
-    // Small delay to ensure DOM is ready
     const timeoutId = setTimeout(() => {
       layout();
     }, 100);
@@ -231,7 +229,6 @@ const PillNav: React.FC<PillNavProps> = ({
     };
   }, [layout, ease, initialLoadAnimation, mounted]);
 
-  // Re-run layout when items change (for dynamic menu updates)
   useEffect(() => {
     if (mounted && items.length > 0) {
       layout();
@@ -297,6 +294,19 @@ const PillNav: React.FC<PillNavProps> = ({
     });
   }, [ease]);
 
+  // 👇 Smooth scroll function using GSAP ScrollToPlugin
+  const scrollToHash = useCallback((hash: string) => {
+    const targetId = hash.replace('#', '');
+    const target = document.getElementById(targetId);
+    if (target) {
+      gsap.to(window, {
+        scrollTo: { y: target, offsetY: 80 }, // 80px offset for fixed nav
+        duration: 1.2,
+        ease: 'power3.inOut' // ease-in-out motion
+      });
+    }
+  }, []);
+
   const toggleMobileMenu = useCallback(() => {
     const newState = !isMobileMenuOpen;
     setIsMobileMenuOpen(newState);
@@ -355,10 +365,40 @@ const PillNav: React.FC<PillNavProps> = ({
     href.startsWith('https://') ||
     href.startsWith('//') ||
     href.startsWith('mailto:') ||
-    href.startsWith('tel:') ||
-    href.startsWith('#'), []);
+    href.startsWith('tel:'), []);
 
   const isInternalLink = useCallback((href?: string) => href && !isExternalLink(href), [isExternalLink]);
+
+  const isHashLink = useCallback((href: string) => href.startsWith('#') || href.startsWith('/#'), []);
+
+  // Updated handlers to use smooth scroll
+  const handleNavClick = useCallback((e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    if (isHashLink(href)) {
+      e.preventDefault();
+      const elementId = href.startsWith('/#') ? href.substring(1) : href; // make it '#contact'
+      scrollToHash(elementId);
+    }
+  }, [isHashLink, scrollToHash]);
+
+  const handleMobileNavClick = useCallback((e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    if (isHashLink(href)) {
+      e.preventDefault();
+      const elementId = href.startsWith('/#') ? href.substring(1) : href;
+      scrollToHash(elementId);
+    }
+    toggleMobileMenu();
+  }, [isHashLink, scrollToHash, toggleMobileMenu]);
+
+  // For the connect button (both desktop and mobile)
+  const handleConnectClick = useCallback((e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    scrollToHash('#contact');
+  }, [scrollToHash]);
+  
+  const handleHomeClick = useCallback((e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    scrollToHash('#home');
+  }, [scrollToHash]);
 
   const cssVars = {
     '--base': baseColor,
@@ -371,16 +411,14 @@ const PillNav: React.FC<PillNavProps> = ({
     '--pill-gap': '3px'
   } as React.CSSProperties;
 
-  // Don't render anything during SSR for GSAP animations
   if (!mounted) {
     return null;
   }
 
-  // Separate logo from menu items
   const [logoItem, ...menuItems] = items;
 
   return (
-    <div className="fixed top-4 z-[1000] w-full flex justify-center px-4 md:px-10">
+    <div className="fixed top-4 z-[1000] w-full flex justify-center px-4 md:px-10 backdrop-blur-[1px]">
       <div className="w-full md:w-auto">
         <nav
           className={`w-full md:w-auto flex items-center justify-between md:justify-center box-border ${className}`}
@@ -390,20 +428,21 @@ const PillNav: React.FC<PillNavProps> = ({
           {/* Logo */}
           <div className="md:absolute md:left-4">
             <Link
-              href={logoItem.href}
+              href='#home'
+              onClick={handleHomeClick}
               aria-label="Home"
               ref={logoRef}
-              className="inline-flex items-center justify-center overflow-hidden transition-transform hover:scale-105 w-[170px] md:w-[210px] backdrop-blur-sm bg-[#FDFFF5]/70 rounded-full"
+              className="inline-flex items-center justify-center overflow-hidden transition-transform hover:scale-105 w-[90px] md:w-[130px] lg:w-[180px]"
             >
-              <h2 className="flex items-center gap-1 text-2xl tracking-tighter md:text-4xl lg:text-4xl lowercase">
+              <h2 className="flex items-center gap-0 text-4xl tracking-[0px] md:text-5xl lg:text-6xl lowercase">
                 bl
                 <span className="text-red-500">ü</span>
-                m&nbsp;design
+                m
               </h2>
             </Link>
           </div>
 
-          {/* Desktop Menu - Centered */}
+          {/* Desktop Menu */}
           <div
             ref={navItemsRef}
             className="relative items-center rounded-full hidden md:flex mx-auto overflow-hidden"
@@ -473,7 +512,20 @@ const PillNav: React.FC<PillNavProps> = ({
 
                 return (
                   <li key={`${item.href}-${i}`} role="none" className="flex h-full">
-                    {isInternalLink(item.href) ? (
+                    {isHashLink(item.href) ? (
+                      <a
+                        role="menuitem"
+                        href={item.href}
+                        className={basePillClasses}
+                        style={pillStyle}
+                        aria-label={item.ariaLabel || item.label}
+                        onMouseEnter={() => handleEnter(i)}
+                        onMouseLeave={() => handleLeave(i)}
+                        onClick={(e) => handleNavClick(e, item.href)}
+                      >
+                        {PillContent}
+                      </a>
+                    ) : isInternalLink(item.href) ? (
                       <Link
                         role="menuitem"
                         href={item.href}
@@ -506,47 +558,28 @@ const PillNav: React.FC<PillNavProps> = ({
 
           {/* Connect Button - Desktop */}
           <div className="hidden md:block md:absolute md:right-4">
-            {isInternalLink(connectButtonHref) ? (
-              <Link
-                href={connectButtonHref}
-                ref={connectButtonRef}
-                onMouseEnter={handleConnectButtonEnter}
-                onMouseLeave={handleConnectButtonLeave}
-                className="rounded-full inline-flex items-center border-2 justify-center font-semibold text-[16px] uppercase tracking-[0.2px] whitespace-nowrap transition-all duration-200"
-                style={{
-                  height: 'var(--nav-h)',
-                  paddingLeft: 'var(--pill-pad-x)',
-                  paddingRight: 'var(--pill-pad-x)',
-                  background: pillColor,
-                  color: resolvedPillTextColor,
-                  transform: 'scale(1)',
-                  borderColor: resolvedPillTextColor
-                }}
-              >
-                {connectButtonLabel}
-              </Link>
-            ) : (
-              <a
-                href={connectButtonHref}
-                ref={connectButtonRef}
-                onMouseEnter={handleConnectButtonEnter}
-                onMouseLeave={handleConnectButtonLeave}
-                className="rounded-full inline-flex items-center justify-center font-semibold text-[16px] uppercase tracking-[0.2px] whitespace-nowrap transition-all duration-200"
-                style={{
-                  height: 'var(--nav-h)',
-                  paddingLeft: 'var(--pill-pad-x)',
-                  paddingRight: 'var(--pill-pad-x)',
-                  background: pillColor,
-                  color: resolvedPillTextColor,
-                  transform: 'scale(1)'
-                }}
-              >
-                {connectButtonLabel}
-              </a>
-            )}
+            <a
+              href="#contact"
+              ref={connectButtonRef as any}
+              onMouseEnter={handleConnectButtonEnter}
+              onMouseLeave={handleConnectButtonLeave}
+              onClick={handleConnectClick}
+              className="rounded-full inline-flex items-center border-2 justify-center font-semibold text-[16px] uppercase tracking-[0.2px] whitespace-nowrap transition-all duration-200"
+              style={{
+                height: 'var(--nav-h)',
+                paddingLeft: 'var(--pill-pad-x)',
+                paddingRight: 'var(--pill-pad-x)',
+                background: pillColor,
+                color: resolvedPillTextColor,
+                transform: 'scale(1)',
+                borderColor: resolvedPillTextColor
+              }}
+            >
+              {connectButtonLabel}
+            </a>
           </div>
 
-          {/* Hamburger Button - Only visible on mobile */}
+          {/* Hamburger */}
           <button
             ref={hamburgerRef}
             onClick={toggleMobileMenu}
@@ -600,14 +633,25 @@ const PillNav: React.FC<PillNavProps> = ({
 
               return (
                 <li key={`${item.href}-${index}`}>
-                  {isInternalLink(item.href) ? (
+                  {isHashLink(item.href) ? (
+                    <a
+                      href={item.href}
+                      className={linkClasses}
+                      style={defaultStyle}
+                      onMouseEnter={hoverIn}
+                      onMouseLeave={hoverOut}
+                      onClick={(e) => handleMobileNavClick(e, item.href)}
+                    >
+                      {item.label}
+                    </a>
+                  ) : isInternalLink(item.href) ? (
                     <Link
                       href={item.href}
                       className={linkClasses}
                       style={defaultStyle}
                       onMouseEnter={hoverIn}
                       onMouseLeave={hoverOut}
-                      onClick={toggleMobileMenu}   // ✅ FIX: calls toggleMobileMenu
+                      onClick={toggleMobileMenu}
                     >
                       {item.label}
                     </Link>
@@ -618,7 +662,7 @@ const PillNav: React.FC<PillNavProps> = ({
                       style={defaultStyle}
                       onMouseEnter={hoverIn}
                       onMouseLeave={hoverOut}
-                      onClick={toggleMobileMenu}   // ✅ FIX: calls toggleMobileMenu
+                      onClick={toggleMobileMenu}
                     >
                       {item.label}
                     </a>
@@ -626,33 +670,18 @@ const PillNav: React.FC<PillNavProps> = ({
                 </li>
               );
             })}
-            {/* Add Connect button to mobile menu */}
             <li key="mobile-connect-button">
-              {isInternalLink(connectButtonHref) ? (
-                <Link
-                  href={connectButtonHref}
-                  className="block py-3 px-4 text-[16px] font-medium rounded-full transition-all duration-200 text-center"
-                  style={{
-                    background: pillColor,
-                    color: resolvedPillTextColor
-                  }}
-                  onClick={toggleMobileMenu}   // ✅ FIX: calls toggleMobileMenu
-                >
-                  {connectButtonLabel}
-                </Link>
-              ) : (
-                <a
-                  href={connectButtonHref}
-                  className="block py-3 px-4 text-[16px] font-medium rounded-full transition-all duration-200 text-center"
-                  style={{
-                    background: pillColor,
-                    color: resolvedPillTextColor
-                  }}
-                  onClick={toggleMobileMenu}   // ✅ FIX: calls toggleMobileMenu
-                >
-                  {connectButtonLabel}
-                </a>
-              )}
+              <a
+                href="#contact"
+                className="block py-3 px-4 text-[16px] font-medium rounded-full transition-all duration-200 text-center"
+                style={{
+                  background: pillColor,
+                  color: resolvedPillTextColor
+                }}
+                onClick={handleConnectClick}
+              >
+                {connectButtonLabel}
+              </a>
             </li>
           </ul>
         </div>
