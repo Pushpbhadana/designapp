@@ -83,7 +83,7 @@ interface ContactSectionProps {
   autoPlay?: boolean;
   playsInline?: boolean;
 
-  // Animation properties
+  // Animation properties (desktop only — mobile always renders full-width, auto-height)
   initialWidth?: string;
   expandedWidth?: string;
 
@@ -123,11 +123,16 @@ const ContactSection: React.FC<ContactSectionProps> = ({
   const containerRef = useRef<HTMLDivElement>(null);
 
   // ---------- GSAP scroll animation ----------
+  // Scoped to desktop (lg+) with gsap.matchMedia(), which is hydration-safe
+  // (no server/client mismatch) and automatically re-evaluates on resize,
+  // cleaning up the tween/ScrollTrigger when the viewport drops below lg.
   useEffect(() => {
     if (!containerRef.current) return;
 
-    const ctx = gsap.context(() => {
-      gsap.to(containerRef.current, {
+    const mm = gsap.matchMedia();
+
+    mm.add('(min-width: 1024px)', () => {
+      const tween = gsap.to(containerRef.current, {
         width: expandedWidth,
         scrollTrigger: {
           trigger: sectionRef.current,
@@ -137,9 +142,14 @@ const ContactSection: React.FC<ContactSectionProps> = ({
           markers: false, // set to true for debugging
         },
       });
+
+      return () => {
+        tween.scrollTrigger?.kill();
+        tween.kill();
+      };
     });
 
-    return () => ctx.revert();
+    return () => mm.revert();
   }, [expandedWidth, startTrigger, endTrigger, scrub]);
 
   // ---------- Form state ----------
@@ -214,14 +224,21 @@ const ContactSection: React.FC<ContactSectionProps> = ({
       <div className={`flex justify-center items-center ${containerClassName}`}>
         <div
           ref={containerRef}
-          className={`relative z-0 h-screen overflow-hidden rounded-tl-2xl rounded-tr-2xl shadow-lg ${className}`}
-          style={{
-            width: initialWidth,
-          }}
+          className={`relative z-0 w-full min-h-[100dvh] overflow-hidden rounded-tl-2xl rounded-tr-2xl shadow-lg lg:h-screen lg:w-[var(--initial-w)] ${className}`}
+          // Full width on mobile always (the `w-full` class wins there).
+          // On lg+, `lg:w-[var(--initial-w)]` kicks in and reads this var,
+          // then GSAP's ScrollTrigger tween (scoped to lg+ via matchMedia)
+          // animates the actual `width` inline style toward expandedWidth.
+          // Pure CSS breakpoint switch — no JS state, no hydration mismatch.
+          style={{ ['--initial-w' as any]: initialWidth }}
         >
+          {/* Background video — absolutely positioned so it always fills
+              whatever height the container ends up at (100dvh+ on mobile
+              once content grows it, or h-screen on desktop), on every
+              screen size. */}
           <video
             ref={videoRef}
-            className="w-full h-full object-cover"
+            className="absolute inset-0 z-0 w-full h-full object-cover"
             src={videoSrc}
             muted={muted}
             loop={loop}
@@ -231,8 +248,8 @@ const ContactSection: React.FC<ContactSectionProps> = ({
             aria-label={alt}
           />
 
-          <div className="absolute inset-0 flex items-center justify-center backdrop-blur-sm bg-black/50">
-            <div className="flex flex-col items-center gap-12 px-6 py-16 lg:flex-row lg:px-20 lg:py-24">
+          <div className="relative z-10 flex min-h-[100dvh] items-center justify-center backdrop-blur-sm bg-black/60 lg:min-h-screen lg:bg-black/50">
+            <div className="flex w-full flex-col items-center gap-12 px-6 py-16 lg:flex-row lg:px-20 lg:py-24">
               {/* ----- Left Column – Contact Form ----- */}
               <motion.div
                 initial={{ opacity: 0, y: 18 }}

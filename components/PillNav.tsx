@@ -679,6 +679,7 @@ const PillNav: React.FC<PillNavProps> = ({
                   color: resolvedPillTextColor
                 }}
                 onClick={handleConnectClick}
+
               >
                 {connectButtonLabel}
               </a>

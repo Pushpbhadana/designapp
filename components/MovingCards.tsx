@@ -108,6 +108,9 @@ export const InfiniteMovingCards = ({
                     <span className="text-lg lg:text-lg font-semibold text-gray-900 mb-2 lg:mb-3 text-red-500">
                       {item.name}
                     </span>
+                    <span className="text-lg lg:text-lg font-semibold text-gray-900 mb-2 lg:mb-3 text-red-500">
+                      ⭐⭐⭐⭐⭐
+                    </span>
                   </span>
                 </div>
                 <div className="relative z-20 text-sm lg:text-base lg:text-lg leading-[1.6] font-normal text-neutral-800">

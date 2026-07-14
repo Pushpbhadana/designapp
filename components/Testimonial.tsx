@@ -5,7 +5,7 @@ import { InfiniteMovingCards } from "./MovingCards";
 
 export function Testimonials() {
     return (
-        <div className="h-[40rem] rounded-md flex flex-col antialiased items-center justify-center relative overflow-hidden">
+        <div className="sm:h-[30rem] rounded-md flex flex-col antialiased items-center justify-center relative overflow-hidden">
 
             <InfiniteMovingCards
                 items={testimonials}

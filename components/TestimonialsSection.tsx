@@ -7,7 +7,7 @@ import Testimonials from "./Testimonial";
 
 export default function TestimonialsSection() {
   return (
-    <section id="testimonials" className="border-b border-black/10 bg-[#fdfff5] px-4 py-16 sm:py-20">
+    <section id="testimonials" className="bg-[#fdfff5] px-4 py-10 sm:py-20">
       <div className="mx-auto max-w-6xl">
         <p className="font-mono text-xs uppercase tracking-[0.2em] text-gray-600 sm:text-sm">
           Testimonials
